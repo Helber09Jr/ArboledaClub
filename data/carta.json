@@ -146,9 +146,7 @@
       "descripcion": "Pasta de papa amarilla con pollo deshilachado, palta y mayonesa.",
       "precio": 14.00,
       "imagen": "imagenes/menu/causa-limena.jpg",
-      "opciones": {
-        "picante": ["Sin picante", "Bajo", "Normal", "Fuerte"]
-      },
+      "opciones": null,
       "guarniciones": null,
       "permiteObservacion": true
     },
@@ -159,9 +157,7 @@
       "descripcion": "Pasta de papa amarilla con atún, palta y mayonesa.",
       "precio": 14.00,
       "imagen": "imagenes/menu/causa-atun.jpg",
-      "opciones": {
-        "picante": ["Sin picante", "Bajo", "Normal", "Fuerte"]
-      },
+      "opciones": null,
       "guarniciones": null,
       "permiteObservacion": true
     },
@@ -292,9 +288,7 @@
       "descripcion": "Lomo fino en salsa de tomate y especias, cocido a fuego lento.",
       "precio": 32.00,
       "imagen": "imagenes/menu/sudado-lomo.jpg",
-      "opciones": {
-        "picante": ["Sin picante", "Bajo", "Normal", "Fuerte"]
-      },
+      "opciones": null,
       "guarniciones": null,
       "permiteObservacion": true
     },
@@ -566,9 +560,7 @@
       "descripcion": "Arroz cocido con variedad de mariscos frescos y especias.",
       "precio": 26.00,
       "imagen": "imagenes/menu/arroz-mariscos.jpg",
-      "opciones": {
-        "picante": ["Sin picante", "Bajo", "Normal", "Fuerte"]
-      },
+      "opciones": null,
       "guarniciones": null,
       "permiteObservacion": true
     },
@@ -579,9 +571,7 @@
       "descripcion": "Fetuccini en salsa huancaína acompañado de lomo saltado.",
       "precio": 35.00,
       "imagen": "imagenes/menu/fetuccini-huancaina-lomo.jpg",
-      "opciones": {
-        "picante": ["Sin picante", "Bajo", "Normal", "Fuerte"]
-      },
+      "opciones": null,
       "guarniciones": null,
       "permiteObservacion": true
     },
@@ -741,9 +731,7 @@
       "descripcion": "Pan con bistec y palta fresca.",
       "precio": 14.00,
       "imagen": "imagenes/menu/sandwich-bistec-palta.jpg",
-      "opciones": {
-        "termino": ["3/4", "A punto", "Bien cocido"]
-      },
+      "opciones": null,
       "guarniciones": null,
       "permiteObservacion": true
     },
@@ -754,9 +742,7 @@
       "descripcion": "Pan con bistec y queso mozzarella derretido.",
       "precio": 14.00,
       "imagen": "imagenes/menu/sandwich-bistec-queso.jpg",
-      "opciones": {
-        "termino": ["3/4", "A punto", "Bien cocido"]
-      },
+      "opciones": null,
       "guarniciones": null,
       "permiteObservacion": true
     },
@@ -778,9 +764,7 @@
       "descripcion": "Pan con lomo fino, queso y palta.",
       "precio": 16.00,
       "imagen": "imagenes/menu/sandwich-lomo-queso-palta.jpg",
-      "opciones": {
-        "termino": ["3/4", "A punto", "Bien cocido"]
-      },
+      "opciones": null,
       "guarniciones": null,
       "permiteObservacion": true
     },
@@ -791,9 +775,7 @@
       "descripcion": "Hamburguesa clásica con todos los ingredientes.",
       "precio": 13.00,
       "imagen": "imagenes/menu/hamburguesa.jpg",
-      "opciones": {
-        "termino": ["3/4", "A punto", "Bien cocido"]
-      },
+      "opciones": null,
       "guarniciones": null,
       "permiteObservacion": true
     },
