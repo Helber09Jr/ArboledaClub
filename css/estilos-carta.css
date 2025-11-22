@@ -41,8 +41,10 @@ button {
 
 /* Variables de diseño (igual que el home) */
 :root {
+  /* Colores principales */
   --azul-principal: #0052B4;
   --azul-oscuro: #003d8a;
+  --azul-suave: #4A90E2;
   --dorado: #c8a95e;
   --dorado-claro: #d9b86c;
   --verde-acento: #2d8659;
@@ -50,17 +52,25 @@ button {
   --gris-claro: #f8f7f5;
   --gris-medio: #e8e5e0;
   --blanco: #fff;
-  --azul-suave: #4A90E2;
   --verde-menta: #50E3C2;
   --morado-elegante: #7B68EE;
   --coral: #FF6B6B;
   --rojo-error: #e74c3c;
   --verde-exito: #27ae60;
 
-  /* Transiciones normalizadas */
-  --transicion-rapida: 0.3s ease-in-out;
-  --transicion-media: 0.4s ease-in-out;
+  /* Tipografía */
+  --fuente-principal: 'Poppins', sans-serif;
+  --fuente-titulos: 'Playfair Display', serif;
+  --fuente-ui: 'Montserrat', sans-serif;
+
+  /* Transiciones */
+  --transicion-rapida: 0.3s ease;
+  --transicion-media: 0.4s ease;
+  --transicion-lenta: 0.6s ease;
   --transicion-suave: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Animación de carga */
+  --tiempo-carga: 2s;
 }
 
 /* Reducción de movimiento */
@@ -152,7 +162,7 @@ button {
   background: linear-gradient(90deg, var(--dorado-claro), var(--dorado), var(--dorado-claro));
   background-size: 200% 100%;
   width: 0;
-  animation: cargar-barra 2s ease-in-out forwards, shimmer 1.5s linear infinite;
+  animation: cargar-barra var(--tiempo-carga) ease-in-out forwards, shimmer 1.5s linear infinite;
 }
 
 @keyframes cargar-barra {
