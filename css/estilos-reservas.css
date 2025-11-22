@@ -2293,14 +2293,20 @@ label:has(~ input[required])::after {
     font-size: 16px !important; /* Previene zoom automático en iOS */
   }
 
-  /* Modales ocupan 90% del ancho */
+  /* Modales ocupan más ancho en móvil */
   .modal-contenido-subseleccion,
-  .modal-contenido-calendario,
   .modal-contenido-horarios,
   .modal-contenido-reserva,
   .modal-contenido-exito {
-    width: 90%;
-    max-width: 90%;
+    width: 92%;
+    max-width: 92%;
+    border-radius: 16px;
+  }
+
+  /* Modal calendario más amplio para mejor visualización */
+  .modal-contenido-calendario {
+    width: 96%;
+    max-width: 96%;
     border-radius: 16px;
   }
 
@@ -2344,10 +2350,14 @@ label:has(~ input[required])::after {
 
   /* Mejor espaciado interno */
   .modal-body-subseleccion,
-  .modal-body-calendario,
   .modal-body-horarios,
   .modal-body-reserva {
     padding: 15px;
+  }
+
+  /* Padding reducido para calendario - más espacio para los días */
+  .modal-body-calendario {
+    padding: 10px 8px;
   }
 
   /* Campos más amplios */
@@ -2455,18 +2465,24 @@ label:has(~ input[required])::after {
   }
   
   .modal-contenido-calendario {
-    max-width: 95%;
+    width: 98%;
+    max-width: 98%;
   }
-  
+
   .calendario-dias-semana span {
-    padding: 10px 5px;
-    font-size: 0.75rem;
+    padding: 8px 3px;
+    font-size: 0.7rem;
   }
-  
+
   .dia-calendario {
-    padding: 10px 5px;
-    font-size: 0.85rem;
-    min-height: 40px;
+    padding: 6px 3px;
+    font-size: 0.8rem;
+    min-height: 38px;
+  }
+
+  /* Padding aún más reducido en pantallas pequeñas */
+  .modal-body-calendario {
+    padding: 8px 5px;
   }
   
   .modal-contenido-horarios {
@@ -3293,5 +3309,55 @@ label:has(~ input[required])::after {
   .leyenda-color {
     width: 10px;
     height: 10px;
+  }
+}
+
+/* ==========================================================
+   HINT DE INTERACCIÓN MÓVIL
+   ========================================================== */
+
+.hint-interaccion-movil {
+  display: none;
+  text-align: center;
+  padding: 10px 15px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, rgba(0, 82, 180, 0.08) 0%, rgba(39, 174, 96, 0.08) 100%);
+  border-radius: 10px;
+  border: 1px solid rgba(0, 82, 180, 0.15);
+}
+
+.hint-interaccion-movil p {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+.hint-interaccion-movil .hint-icono {
+  display: inline-block;
+  margin: 0 3px;
+  font-size: 0.85rem;
+}
+
+.hint-interaccion-movil strong {
+  color: var(--azul-principal);
+  font-weight: 600;
+}
+
+/* Mostrar solo en móvil */
+@media (max-width: 768px) {
+  .hint-interaccion-movil {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .hint-interaccion-movil {
+    padding: 8px 12px;
+    margin-top: 8px;
+  }
+
+  .hint-interaccion-movil p {
+    font-size: 0.7rem;
   }
 }
