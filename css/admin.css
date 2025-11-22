@@ -1040,23 +1040,6 @@ body {
   color: #888;
 }
 
-.boton-limpiar-etiquetas {
-  background: #dc3545;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-left: auto;
-}
-
-.boton-limpiar-etiquetas:hover {
-  background: #c82333;
-  transform: translateY(-2px);
-}
-
 .lista-reservas-admin {
   display: flex;
   flex-direction: column;
