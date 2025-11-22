@@ -2193,6 +2193,177 @@ body {
     font-size: 0.7rem !important;
   }
 }
+
+/* ==========================================================
+   MODAL DE CONFIRMACIÓN
+   ========================================================== */
+
+.modal-confirmacion {
+  max-width: 420px;
+  text-align: center;
+}
+
+.confirmacion-header {
+  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  padding: 25px 20px;
+}
+
+.icono-confirmacion {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+}
+
+.icono-confirmacion svg {
+  width: 32px;
+  height: 32px;
+  color: var(--blanco);
+}
+
+.confirmacion-header h3 {
+  color: var(--blanco);
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.mensaje-confirmacion {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  padding: 0 10px;
+}
+
+.checkbox-notificacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 25px;
+  padding: 12px 15px;
+  background: rgba(37, 211, 102, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(37, 211, 102, 0.3);
+}
+
+.checkbox-notificacion input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #25D366;
+}
+
+.checkbox-notificacion label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #333;
+  cursor: pointer;
+}
+
+.checkbox-notificacion label svg {
+  width: 20px;
+  height: 20px;
+  color: #25D366;
+}
+
+.botones-confirmacion {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.boton-cancelar-confirmacion,
+.boton-aceptar-confirmacion {
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.boton-cancelar-confirmacion {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.boton-cancelar-confirmacion:hover {
+  background: #e0e0e0;
+}
+
+.boton-aceptar-confirmacion {
+  background: linear-gradient(135deg, var(--rojo-error) 0%, #c0392b 100%);
+  color: var(--blanco);
+}
+
+.boton-aceptar-confirmacion:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+}
+
+/* Variante para confirmación positiva (reservado) */
+.modal-confirmacion.confirmacion-positiva .confirmacion-header {
+  background: linear-gradient(135deg, var(--verde-acento) 0%, #1e8449 100%);
+}
+
+.modal-confirmacion.confirmacion-positiva .boton-aceptar-confirmacion {
+  background: linear-gradient(135deg, var(--verde-acento) 0%, #1e8449 100%);
+}
+
+.modal-confirmacion.confirmacion-positiva .boton-aceptar-confirmacion:hover {
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+}
+
+@media (max-width: 480px) {
+  .modal-confirmacion {
+    max-width: 95%;
+  }
+
+  .confirmacion-header {
+    padding: 20px 15px;
+  }
+
+  .icono-confirmacion {
+    width: 50px;
+    height: 50px;
+  }
+
+  .icono-confirmacion svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .mensaje-confirmacion {
+    font-size: 0.9rem;
+  }
+
+  .checkbox-notificacion {
+    padding: 10px 12px;
+  }
+
+  .checkbox-notificacion label {
+    font-size: 0.8rem;
+  }
+
+  .botones-confirmacion {
+    flex-direction: column;
+  }
+
+  .boton-cancelar-confirmacion,
+  .boton-aceptar-confirmacion {
+    width: 100%;
+    padding: 14px 20px;
+  }
+}
+
 /* ==========================================================
    MEJORAS RESPONSIVE PANEL ADMIN - MÓVIL
    ========================================================== */
