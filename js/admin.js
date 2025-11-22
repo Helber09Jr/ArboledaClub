@@ -1634,6 +1634,12 @@ function actualizarEstadisticasCarta() {
 // ==========================================================
 
 async function limpiarTodasEtiquetas() {
+  // Verificar que los platos estén cargados
+  if (!platosData || platosData.length === 0) {
+    mostrarToast('⚠️ Primero carga los platos de la carta');
+    return;
+  }
+
   if (!confirm('¿Estás seguro de que deseas quitar TODAS las etiquetas de TODOS los platos?')) {
     return;
   }
@@ -1665,7 +1671,7 @@ async function limpiarTodasEtiquetas() {
 
   } catch (error) {
     console.error('Error al limpiar etiquetas:', error);
-    mostrarToast('Error al limpiar las etiquetas');
+    mostrarToast(`❌ Error: ${error.message}`);
   }
 }
 
