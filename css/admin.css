@@ -142,12 +142,13 @@ body {
 
 /* Contenido del login */
 .login-content {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  padding: 45px 40px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 40px 35px;
   border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 /* Header del login */
@@ -548,29 +549,193 @@ body {
 }
 
 /* Responsive para login */
-@media (max-width: 480px) {
-  .login-content {
-    padding: 35px 25px;
+@media (max-width: 768px) {
+  .pantalla-login {
+    padding: 15px;
   }
 
-  .titulo-login {
-    font-size: 1.6rem;
+  .login-content {
+    padding: 30px 25px;
+  }
+
+  .login-header {
+    margin-bottom: 25px;
   }
 
   .logo-login {
-    width: 70px;
-    height: 70px;
+    width: 65px;
+    height: 65px;
+    margin-bottom: 15px;
+  }
+
+  .titulo-login {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+  }
+
+  .subtitulo-login {
+    font-size: 0.8rem;
+  }
+
+  .campo-login {
+    margin-bottom: 16px;
+  }
+
+  .campo-login label {
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+  }
+
+  .campo-login input {
+    padding: 12px 45px 12px 14px;
+    font-size: 0.95rem;
   }
 
   .login-options {
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-start;
+    margin-bottom: 20px;
+    font-size: 0.8rem;
+  }
+
+  .boton-login {
+    padding: 14px 20px;
+    font-size: 0.95rem;
+  }
+
+  .login-footer {
+    margin-top: 20px;
+    padding-top: 15px;
+  }
+
+  .login-footer p {
+    font-size: 0.7rem;
+  }
+
+  .error-login {
+    padding: 10px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pantalla-login {
+    padding: 10px;
+  }
+
+  .login-content {
+    padding: 25px 20px;
+  }
+
+  .login-header {
+    margin-bottom: 20px;
+  }
+
+  .logo-login {
+    width: 55px;
+    height: 55px;
+    margin-bottom: 12px;
+    border-width: 2px;
+  }
+
+  .titulo-login {
+    font-size: 1.35rem;
+  }
+
+  .subtitulo-login {
+    font-size: 0.75rem;
+  }
+
+  .campo-login {
+    margin-bottom: 14px;
+  }
+
+  .campo-login label {
+    margin-bottom: 5px;
+    font-size: 0.8rem;
+  }
+
+  .campo-login input {
+    padding: 11px 42px 11px 12px;
+    font-size: 0.9rem;
+    border-radius: 10px;
+  }
+
+  .input-icon,
+  .toggle-password svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .toggle-password {
+    right: 12px;
+  }
+
+  .login-options {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    font-size: 0.75rem;
+  }
+
+  .checkbox-remember {
+    padding-left: 22px;
+  }
+
+  .checkmark {
+    width: 16px;
+    height: 16px;
+  }
+
+  .boton-login {
+    padding: 12px 18px;
+    font-size: 0.9rem;
+    border-radius: 10px;
+  }
+
+  .login-footer {
+    margin-top: 15px;
+    padding-top: 12px;
+  }
+
+  .error-login {
+    margin-top: 12px;
+    padding: 8px 10px;
+    font-size: 0.75rem;
+    border-radius: 8px;
+  }
+
+  .error-icon {
+    width: 16px;
+    height: 16px;
   }
 
   .login-background::before,
   .login-background::after {
     display: none;
+  }
+}
+
+/* Pantallas muy pequeñas */
+@media (max-width: 360px) {
+  .login-content {
+    padding: 20px 16px;
+  }
+
+  .logo-login {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+  }
+
+  .titulo-login {
+    font-size: 1.2rem;
+  }
+
+  .campo-login {
+    margin-bottom: 12px;
+  }
+
+  .campo-login input {
+    padding: 10px 40px 10px 10px;
   }
 }
 
