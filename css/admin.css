@@ -23,8 +23,10 @@ body {
 }
 
 :root {
+  /* Colores */
   --azul-principal: #0052B4;
   --azul-oscuro: #003d8a;
+  --azul-suave: #4a90d9;
   --dorado: #c8a95e;
   --dorado-claro: #d9b86c;
   --verde-acento: #2d8659;
@@ -35,6 +37,11 @@ body {
   --gris-claro: #f8f7f5;
   --gris-medio: #e8e5e0;
   --blanco: #fff;
+
+  /* Tipografía */
+  --fuente-principal: 'Poppins', sans-serif;
+  --fuente-titulos: 'Playfair Display', serif;
+  --fuente-ui: 'Montserrat', sans-serif;
 }
 
 /* ==========================================================
@@ -200,8 +207,10 @@ body {
 
 .campo-login label {
   display: block;
+  font-family: var(--fuente-ui);
   font-weight: 500;
   margin-bottom: 10px;
+  letter-spacing: 0.3px;
   color: rgba(255, 255, 255, 0.9);
   font-size: 0.9rem;
 }
@@ -326,8 +335,10 @@ body {
   color: var(--azul-principal);
   border: none;
   border-radius: 12px;
+  font-family: var(--fuente-ui);
   font-size: 1rem;
   font-weight: 600;
+  letter-spacing: 0.5px;
   cursor: pointer;
   display: flex;
   align-items: center;
