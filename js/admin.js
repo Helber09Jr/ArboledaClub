@@ -1630,56 +1630,9 @@ function actualizarEstadisticasCarta() {
 }
 
 // ==========================================================
-// LIMPIAR TODAS LAS ETIQUETAS
-// ==========================================================
-
-async function limpiarTodasEtiquetas() {
-  // Verificar que los platos estén cargados
-  if (!platosData || platosData.length === 0) {
-    mostrarToast('⚠️ Primero carga los platos de la carta');
-    return;
-  }
-
-  if (!confirm('¿Estás seguro de que deseas quitar TODAS las etiquetas de TODOS los platos?')) {
-    return;
-  }
-
-  try {
-    mostrarToast('Limpiando etiquetas...');
-
-    let contador = 0;
-    for (const plato of platosData) {
-      await setDoc(doc(db, 'estadosPlatos', plato.id), {
-        etiquetas: [],
-        ultimaActualizacion: new Date().toISOString()
-      });
-      contador++;
-    }
-
-    // Limpiar datos locales
-    estadosPlatosData = {};
-    platosData.forEach(plato => {
-      estadosPlatosData[plato.id] = [];
-    });
-
-    // Actualizar vista
-    renderizarPlatosCarta();
-    actualizarContadoresCarta();
-
-    mostrarToast(`✅ Se limpiaron las etiquetas de ${contador} platos`);
-    console.log(`✅ Etiquetas limpiadas de ${contador} platos`);
-
-  } catch (error) {
-    console.error('Error al limpiar etiquetas:', error);
-    mostrarToast(`❌ Error: ${error.message}`);
-  }
-}
-
-// ==========================================================
 // EXPORTAR FUNCIONES GLOBALES
 // ==========================================================
 
 window.verDetalle = verDetalle;
 window.abrirModalEtiquetas = abrirModalEtiquetas;
 window.toggleAgotado = toggleAgotado;
-window.limpiarTodasEtiquetas = limpiarTodasEtiquetas;
