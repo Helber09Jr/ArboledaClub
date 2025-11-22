@@ -111,9 +111,7 @@
         "imagenes/menu/causa-limena.jpg",
         "imagenes/menu/palta-reina.jpg"
       ],
-      "opciones": {
-        "picante": ["Sin picante", "Bajo", "Normal", "Fuerte"]
-      },
+      "opciones": null,
       "guarniciones": null,
       "permiteObservacion": true
     },
