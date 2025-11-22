@@ -91,6 +91,7 @@ function inicializarEventos() {
 
   inicializarFiltros();
   inicializarModal();
+  inicializarModalConfirmacion();
   inicializarReservaManual();
   inicializarTabs();
   inicializarGestionCarta();
@@ -479,43 +480,126 @@ function cerrarModalDetalle() {
   reservaSeleccionada = null;
 }
 
+// Variable para almacenar el estado pendiente de confirmación
+let estadoPendienteConfirmacion = null;
+
 async function cambiarEstado(nuevoEstado) {
   if (!reservaSeleccionada) {
     mostrarToast('No hay reserva seleccionada');
     return;
   }
-  
+
   if (reservaSeleccionada.estado === nuevoEstado) {
     mostrarToast('La reserva ya tiene este estado');
     return;
   }
-  
+
+  // Mostrar confirmación para estados importantes
+  if (nuevoEstado === 'cancelado' || nuevoEstado === 'reservado') {
+    mostrarConfirmacionEstado(nuevoEstado);
+    return;
+  }
+
+  // Para estado pendiente, cambiar directamente
+  await ejecutarCambioEstado(nuevoEstado, false);
+}
+
+function mostrarConfirmacionEstado(nuevoEstado) {
+  estadoPendienteConfirmacion = nuevoEstado;
+
+  const modal = document.getElementById('modalConfirmacion');
+  const modalContenido = modal.querySelector('.modal-confirmacion');
+  const titulo = document.getElementById('tituloConfirmacion');
+  const mensaje = document.getElementById('mensajeConfirmacion');
+  const checkbox = document.getElementById('checkNotificarWhatsApp');
+  const btnAceptar = document.getElementById('btnAceptarConfirmacion');
+
+  // Configurar según el estado
+  if (nuevoEstado === 'cancelado') {
+    modalContenido.classList.remove('confirmacion-positiva');
+    titulo.textContent = 'Cancelar Reserva';
+    mensaje.textContent = `¿Estás seguro de que deseas CANCELAR la reserva de ${reservaSeleccionada.socio?.nombre || 'este socio'}?`;
+    btnAceptar.textContent = 'Sí, cancelar';
+  } else if (nuevoEstado === 'reservado') {
+    modalContenido.classList.add('confirmacion-positiva');
+    titulo.textContent = 'Confirmar Reserva';
+    mensaje.textContent = `¿Confirmas la reserva de ${reservaSeleccionada.socio?.nombre || 'este socio'}?`;
+    btnAceptar.textContent = 'Sí, confirmar';
+  }
+
+  // Verificar si hay teléfono para mostrar opción de WhatsApp
+  if (reservaSeleccionada.socio?.telefono) {
+    checkbox.parentElement.style.display = 'flex';
+    checkbox.checked = true;
+  } else {
+    checkbox.parentElement.style.display = 'none';
+    checkbox.checked = false;
+  }
+
+  modal.classList.add('activo');
+  document.body.style.overflow = 'hidden';
+}
+
+function cerrarModalConfirmacion() {
+  const modal = document.getElementById('modalConfirmacion');
+  modal.classList.remove('activo');
+  document.body.style.overflow = 'auto';
+  estadoPendienteConfirmacion = null;
+}
+
+async function confirmarCambioEstado() {
+  if (!estadoPendienteConfirmacion) return;
+
+  const notificar = document.getElementById('checkNotificarWhatsApp').checked;
+  await ejecutarCambioEstado(estadoPendienteConfirmacion, notificar);
+  cerrarModalConfirmacion();
+}
+
+async function ejecutarCambioEstado(nuevoEstado, notificarWhatsApp) {
   try {
     const reservaRef = doc(db, 'reservas', reservaSeleccionada.id);
     await updateDoc(reservaRef, {
       estado: nuevoEstado,
       fechaActualizacion: Timestamp.now()
     });
-    
+
     const estadoActual = document.getElementById('detalleEstadoActual');
     estadoActual.textContent = capitalizarTexto(nuevoEstado);
     estadoActual.className = `detalle-valor badge ${nuevoEstado}`;
-    
+
     document.querySelectorAll('.boton-estado').forEach(btn => {
       btn.classList.remove('activo');
       if (btn.getAttribute('data-estado') === nuevoEstado) {
         btn.classList.add('activo');
       }
     });
-    
+
     reservaSeleccionada.estado = nuevoEstado;
-    
+
     mostrarToast(`Estado cambiado a: ${capitalizarTexto(nuevoEstado)}`);
-    
+
+    // Enviar notificación por WhatsApp si está habilitado
+    if (notificarWhatsApp && reservaSeleccionada.socio?.telefono) {
+      setTimeout(() => {
+        enviarNotificacionWhatsApp(reservaSeleccionada);
+      }, 500);
+    }
+
   } catch (error) {
     console.error('Error al cambiar estado:', error);
     mostrarToast('Error al actualizar el estado');
   }
+}
+
+// Inicializar modal de confirmación
+function inicializarModalConfirmacion() {
+  const btnCancelar = document.getElementById('btnCancelarConfirmacion');
+  const btnAceptar = document.getElementById('btnAceptarConfirmacion');
+  const overlay = document.querySelector('#modalConfirmacion .modal-overlay-admin');
+
+  if (btnCancelar) btnCancelar.onclick = cerrarModalConfirmacion;
+  if (btnAceptar) btnAceptar.onclick = confirmarCambioEstado;
+  if (overlay) overlay.onclick = cerrarModalConfirmacion;
 }
 
 // ==========================================================
