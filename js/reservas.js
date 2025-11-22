@@ -573,55 +573,46 @@ function generarCalendario() {
   for (let dia = 1; dia <= diasEnMes; dia++) {
     const fechaActual = new Date(anioActual, mesActual, dia);
     fechaActual.setHours(0, 0, 0, 0);
-    
+
     let clases = 'dia-calendario';
     let clickeable = true;
-    let infoExtra = '';
-    
+    let dataAtributos = '';
+
     // Marcar día de hoy
     if (fechaActual.getTime() === hoy.getTime()) {
       clases += ' hoy';
     }
-    
+
     // Verificar si es pasado
     if (fechaActual < hoy) {
       clases += ' no-disponible';
       clickeable = false;
     } else {
       const infoReserva = obtenerInfoReservaCompleta(fechaActual);
-      
+
       if (infoReserva) {
         clases += ` ${infoReserva.estado}`;
-        
+        clases += ' tiene-reserva';
+        dataAtributos = `data-socio="${infoReserva.socioNombre}" data-estado="${infoReserva.estado}"`;
+
         if (infoReserva.estado === 'reservado') {
           clickeable = false;
-          infoExtra = `
-            <span class="icono-estado">🔒</span>
-            <span class="nombre-socio-dia">${acortarNombre(infoReserva.socioNombre)}</span>
-          `;
-        } else if (infoReserva.estado === 'pendiente') {
-          infoExtra = `
-            <span class="icono-estado">⏳</span>
-            <span class="nombre-socio-dia">${acortarNombre(infoReserva.socioNombre)}</span>
-          `;
         }
       } else {
         clases += ' disponible';
       }
     }
-    
+
     if (clickeable) {
       html += `
-        <div class="${clases}" onclick="window.seleccionarFecha(${dia})">
+        <div class="${clases}" ${dataAtributos} onclick="window.seleccionarFecha(${dia})" ontouchstart="window.mostrarInfoReserva(event, ${dia})" onmouseenter="window.mostrarInfoReserva(event, ${dia})" onmouseleave="window.ocultarInfoReserva()">
           <span class="numero-dia">${dia}</span>
-          ${infoExtra}
         </div>
       `;
     } else {
       html += `
-        <div class="${clases}">
+        <div class="${clases}" ${dataAtributos} ontouchstart="window.mostrarInfoReserva(event, ${dia})" onmouseenter="window.mostrarInfoReserva(event, ${dia})" onmouseleave="window.ocultarInfoReserva()">
           <span class="numero-dia">${dia}</span>
-          ${infoExtra}
         </div>
       `;
     }
@@ -727,15 +718,92 @@ function obtenerInfoReservaCompleta(fecha) {
 
 function acortarNombre(nombreCompleto) {
   if (!nombreCompleto) return '';
-  
+
   // Si tiene coma (Apellido, Nombre), tomar solo el apellido
   if (nombreCompleto.includes(',')) {
     return nombreCompleto.split(',')[0].trim();
   }
-  
+
   // Si no, tomar primera palabra
   const palabras = nombreCompleto.trim().split(' ');
   return palabras[0];
+}
+
+// ==========================================================
+// POPUP DE INFORMACIÓN DE RESERVA
+// ==========================================================
+
+let popupTimeout = null;
+
+function mostrarInfoReserva(event, dia) {
+  const elemento = event.currentTarget;
+  const socio = elemento.getAttribute('data-socio');
+  const estado = elemento.getAttribute('data-estado');
+
+  if (!socio) return;
+
+  // Limpiar timeout anterior
+  if (popupTimeout) {
+    clearTimeout(popupTimeout);
+  }
+
+  // Obtener o crear el popup
+  let popup = document.getElementById('popupInfoReserva');
+  if (!popup) {
+    popup = document.createElement('div');
+    popup.id = 'popupInfoReserva';
+    popup.className = 'popup-info-reserva';
+    document.body.appendChild(popup);
+  }
+
+  // Texto del estado
+  const estadoTexto = estado === 'reservado' ? 'Reservado' : 'Pendiente';
+  const estadoIcono = estado === 'reservado' ? '🔒' : '⏳';
+
+  // Contenido del popup
+  popup.innerHTML = `
+    <div class="popup-contenido">
+      <span class="popup-icono">${estadoIcono}</span>
+      <div class="popup-datos">
+        <span class="popup-socio">${socio}</span>
+        <span class="popup-estado ${estado}">${estadoTexto}</span>
+      </div>
+    </div>
+  `;
+
+  // Posicionar el popup
+  const rect = elemento.getBoundingClientRect();
+  const popupRect = popup.getBoundingClientRect();
+
+  // Calcular posición centrada debajo del día
+  let left = rect.left + (rect.width / 2);
+  let top = rect.bottom + 8;
+
+  // Ajustar si se sale de la pantalla
+  popup.style.left = `${left}px`;
+  popup.style.top = `${top}px`;
+  popup.style.transform = 'translateX(-50%)';
+
+  // Mostrar
+  popup.classList.add('visible');
+
+  // En móvil, ocultar después de un tiempo
+  if ('ontouchstart' in window) {
+    popupTimeout = setTimeout(() => {
+      ocultarInfoReserva();
+    }, 2500);
+  }
+}
+
+function ocultarInfoReserva() {
+  const popup = document.getElementById('popupInfoReserva');
+  if (popup) {
+    popup.classList.remove('visible');
+  }
+  if (popupTimeout) {
+    clearTimeout(popupTimeout);
+    popupTimeout = null;
+  }
 }
 
 // ==========================================================
@@ -1361,3 +1429,5 @@ window.addEventListener('beforeunload', () => {
 window.seleccionarFecha = seleccionarFecha;
 window.seleccionarHorario = seleccionarHorario;
 window.mostrarToast = mostrarToast;
+window.mostrarInfoReserva = mostrarInfoReserva;
+window.ocultarInfoReserva = ocultarInfoReserva;
