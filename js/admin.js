@@ -89,6 +89,34 @@ function inicializarEventos() {
     btnCerrarSesion.onclick = cerrarSesion;
   }
 
+  // Toggle mostrar/ocultar contraseña
+  const togglePassword = document.getElementById('togglePassword');
+  const passwordInput = document.getElementById('passwordAdmin');
+  if (togglePassword && passwordInput) {
+    togglePassword.onclick = () => {
+      const tipo = passwordInput.type === 'password' ? 'text' : 'password';
+      passwordInput.type = tipo;
+      togglePassword.classList.toggle('activo');
+    };
+  }
+
+  // Validación en tiempo real del email
+  const emailInput = document.getElementById('emailAdmin');
+  if (emailInput) {
+    emailInput.addEventListener('input', () => {
+      const valor = emailInput.value.trim();
+      if (valor === '') {
+        emailInput.classList.remove('valido', 'invalido');
+      } else if (validarEmail(valor)) {
+        emailInput.classList.remove('invalido');
+        emailInput.classList.add('valido');
+      } else {
+        emailInput.classList.remove('valido');
+        emailInput.classList.add('invalido');
+      }
+    });
+  }
+
   inicializarFiltros();
   inicializarModal();
   inicializarModalConfirmacion();
@@ -97,28 +125,60 @@ function inicializarEventos() {
   inicializarGestionCarta();
 }
 
+// Función para validar email
+function validarEmail(email) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+}
+
+// Función para mostrar error
+function mostrarErrorLogin(mensaje) {
+  const errorEl = document.getElementById('errorLogin');
+  const errorText = errorEl.querySelector('.error-text');
+  if (errorText) {
+    errorText.textContent = mensaje;
+  }
+  errorEl.classList.remove('visible');
+  // Forzar reflow para reiniciar animación
+  void errorEl.offsetWidth;
+  errorEl.classList.add('visible');
+}
+
+// Función para ocultar error
+function ocultarErrorLogin() {
+  const errorEl = document.getElementById('errorLogin');
+  errorEl.classList.remove('visible');
+}
+
 async function iniciarSesion() {
   const email = document.getElementById('emailAdmin').value.trim();
   const password = document.getElementById('passwordAdmin').value;
-  const errorEl = document.getElementById('errorLogin');
-  
+  const boton = document.getElementById('btnLogin');
+
+  // Ocultar error previo
+  ocultarErrorLogin();
+
   if (!email || !password) {
-    errorEl.textContent = 'Por favor completa todos los campos';
+    mostrarErrorLogin('Por favor completa todos los campos');
     return;
   }
-  
+
+  if (!validarEmail(email)) {
+    mostrarErrorLogin('El correo electrónico no es válido');
+    return;
+  }
+
   try {
-    errorEl.textContent = '';
-    const boton = document.querySelector('.boton-login');
+    // Activar estado de carga
+    boton.classList.add('cargando');
     boton.disabled = true;
-    boton.textContent = 'Ingresando...';
-    
+
     await signInWithEmailAndPassword(auth, email, password);
     mostrarToast('Sesión iniciada correctamente');
-    
+
   } catch (error) {
     console.error('Error de autenticación:', error);
-    
+
     let mensaje = 'Error al iniciar sesión';
     if (error.code === 'auth/user-not-found') {
       mensaje = 'Usuario no encontrado';
@@ -131,19 +191,12 @@ async function iniciarSesion() {
     } else if (error.code === 'auth/invalid-credential') {
       mensaje = 'Credenciales inválidas';
     }
-    
-    errorEl.textContent = mensaje;
+
+    mostrarErrorLogin(mensaje);
   } finally {
-    const boton = document.querySelector('.boton-login');
+    // Desactivar estado de carga
+    boton.classList.remove('cargando');
     boton.disabled = false;
-    boton.innerHTML = `
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-        <polyline points="10 17 15 12 10 7"></polyline>
-        <line x1="15" y1="12" x2="3" y2="12"></line>
-      </svg>
-      Ingresar
-    `;
   }
 }
 
