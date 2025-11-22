@@ -1649,7 +1649,7 @@ async function limpiarTodasEtiquetas() {
 
     let contador = 0;
     for (const plato of platosData) {
-      await setDoc(doc(db, 'estados_platos', plato.id), {
+      await setDoc(doc(db, 'estadosPlatos', plato.id), {
         etiquetas: [],
         ultimaActualizacion: new Date().toISOString()
       });
