@@ -361,7 +361,7 @@ button {
 }
 
 .titulo-hero-reservas {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 3rem;
   font-weight: 800;
   color: var(--dorado-claro);
@@ -414,7 +414,7 @@ button {
   font-weight: 800;
   color: var(--azul-principal);
   margin-bottom: 18px;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Montserrat', sans-serif;
   letter-spacing: 1.5px;
   line-height: 1.1;
 }
@@ -490,7 +490,7 @@ button {
   font-weight: 700;
   color: var(--azul-principal);
   margin-bottom: 8px;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .tarjeta-descripcion-reserva {
@@ -667,7 +667,7 @@ button {
 
 .modal-header-subseleccion h3 {
   font-size: 1.5rem;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   margin: 0 0 8px 0;
 }
@@ -910,7 +910,7 @@ button {
 
 .modal-header-calendario h3 {
   font-size: 1.4rem;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   margin: 0 0 5px 0;
 }
@@ -964,7 +964,7 @@ button {
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--azul-principal);
-  font-family: 'Playfair Display', serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .calendario-leyenda {
@@ -1167,7 +1167,7 @@ button {
 
 .modal-header-horarios h3 {
   font-size: 1.3rem;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   margin: 0 0 5px 0;
 }
@@ -1309,7 +1309,7 @@ button {
 
 .modal-header-reserva h3 {
   font-size: 1.4rem;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   margin: 0 0 15px 0;
   text-align: center;
@@ -1498,7 +1498,7 @@ button {
   font-weight: 700;
   color: var(--verde-acento);
   margin-bottom: 15px;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .modal-contenido-exito p {
@@ -2954,7 +2954,7 @@ label:has(~ input[required])::after {
 
 .galeria-header h3 {
   color: white;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 1.6rem;
   margin-bottom: 8px;
 }

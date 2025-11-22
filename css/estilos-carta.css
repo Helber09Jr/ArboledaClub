@@ -363,7 +363,7 @@ button {
 }
 
 .titulo-hero-carta {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 3rem;
   font-weight: 800;
   color: var(--dorado-claro);
@@ -1334,7 +1334,7 @@ button {
   font-weight: 700;
   color: var(--azul-principal);
   margin-bottom: 8px;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .modal-vista-precio {
@@ -1986,7 +1986,7 @@ button {
   font-size: 1.2rem;
   font-weight: 700;
   margin: 0;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .btn-cerrar-carrito {
