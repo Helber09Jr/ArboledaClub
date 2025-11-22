@@ -3148,3 +3148,150 @@ label:has(~ input[required])::after {
 }
 
 /* Si la imagen carga correctamente, se sobrescribe el background-image inline */
+/* ==========================================================
+   POPUP DE INFORMACIÓN DE RESERVA - CALENDARIO MÓVIL
+   ========================================================== */
+
+.popup-info-reserva {
+  position: fixed;
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-50%) translateY(10px);
+  transition: all 0.25s ease;
+}
+
+.popup-info-reserva.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.popup-contenido {
+  background: white;
+  padding: 10px 14px;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 160px;
+  max-width: 250px;
+}
+
+.popup-icono {
+  font-size: 1.2rem;
+}
+
+.popup-datos {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.popup-socio {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #333;
+  line-height: 1.2;
+}
+
+.popup-estado {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.popup-estado.pendiente {
+  color: #f39c12;
+}
+
+.popup-estado.reservado {
+  color: #e74c3c;
+}
+
+/* ==========================================================
+   MEJORAS CALENDARIO MÓVIL - CUADROS UNIFORMES
+   ========================================================== */
+
+/* Días del calendario con tamaño fijo */
+.dia-calendario {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Indicador visual de que tiene reserva */
+.dia-calendario.tiene-reserva::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.dia-calendario.pendiente::after {
+  background: #f39c12;
+}
+
+.dia-calendario.reservado::after {
+  background: #e74c3c;
+}
+
+/* Estilos mejorados para móvil */
+@media (max-width: 480px) {
+  .calendario-dias {
+    gap: 1px;
+  }
+
+  .dia-calendario {
+    padding: 8px 4px;
+    min-height: 42px;
+    font-size: 0.85rem;
+  }
+
+  .numero-dia {
+    font-size: 0.9rem;
+  }
+
+  .dia-calendario.tiene-reserva::after {
+    width: 5px;
+    height: 5px;
+    bottom: 3px;
+  }
+
+  .popup-contenido {
+    padding: 8px 12px;
+    min-width: 140px;
+  }
+
+  .popup-socio {
+    font-size: 0.8rem;
+  }
+
+  .popup-estado {
+    font-size: 0.65rem;
+  }
+
+  .calendario-leyenda {
+    padding: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .leyenda-item {
+    font-size: 0.65rem;
+  }
+
+  .leyenda-color {
+    width: 10px;
+    height: 10px;
+  }
+}

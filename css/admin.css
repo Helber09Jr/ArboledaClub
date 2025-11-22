@@ -2193,3 +2193,402 @@ body {
     font-size: 0.7rem !important;
   }
 }
+/* ==========================================================
+   MEJORAS RESPONSIVE PANEL ADMIN - MÓVIL
+   ========================================================== */
+
+/* Header Admin Compacto para Móvil */
+@media (max-width: 768px) {
+  .header-admin {
+    padding: 15px 0 0;
+  }
+
+  .contenedor-header-admin {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    padding: 0 15px;
+    gap: 10px;
+    text-align: left !important;
+  }
+
+  .logo-admin {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .logo-img-admin {
+    width: 40px;
+    height: 40px;
+  }
+
+  .info-admin h1 {
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+
+  .info-admin span {
+    font-size: 0.75rem;
+  }
+
+  .acciones-admin {
+    flex-direction: row !important;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .usuario-actual {
+    font-size: 0.7rem;
+    max-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .boton-cerrar-sesion {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .boton-cerrar-sesion svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Tabs compactos */
+  .nav-tabs-admin {
+    padding: 10px 15px 12px;
+    gap: 6px;
+  }
+
+  .tab-admin {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .tab-admin svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  /* Contenido principal */
+  .contenido-admin {
+    padding: 15px;
+  }
+
+  /* Estadísticas en grid 2x2 */
+  .seccion-estadisticas {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px;
+  }
+
+  .tarjeta-estadistica {
+    padding: 14px 12px;
+    gap: 10px;
+  }
+
+  .icono-estadistica {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+  }
+
+  .icono-estadistica svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .numero-estadistica {
+    font-size: 1.5rem;
+  }
+
+  .etiqueta-estadistica {
+    font-size: 0.75rem;
+  }
+
+  /* Botón reserva manual */
+  .boton-reserva-manual {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+  }
+
+  /* Sección filtros compacta */
+  .seccion-filtros {
+    padding: 15px;
+  }
+
+  .titulo-seccion-admin {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+  }
+
+  /* Reservas lista */
+  .seccion-reservas-admin {
+    padding: 15px;
+  }
+
+  .tarjeta-reserva-admin {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .nombre-instalacion {
+    font-size: 0.95rem;
+  }
+
+  .badge-estado {
+    padding: 3px 8px;
+    font-size: 0.65rem;
+  }
+
+  .reserva-fecha,
+  .reserva-horario,
+  .socio-nombre,
+  .socio-telefono,
+  .socio-personas {
+    font-size: 0.8rem;
+  }
+
+  .boton-ver-detalle {
+    padding: 10px 16px;
+    font-size: 0.8rem;
+  }
+
+  /* Modal responsive */
+  .modal-contenido-admin {
+    margin: 10px;
+    border-radius: 16px;
+  }
+
+  .modal-header-admin {
+    padding: 20px 20px 15px;
+  }
+
+  .modal-header-admin h3 {
+    font-size: 1.3rem;
+  }
+
+  .modal-body-admin {
+    padding: 15px 20px 20px;
+  }
+}
+
+/* Móvil pequeño - ajustes adicionales */
+@media (max-width: 480px) {
+  .contenedor-header-admin {
+    padding: 0 10px;
+  }
+
+  .logo-img-admin {
+    width: 36px;
+    height: 36px;
+  }
+
+  .info-admin h1 {
+    font-size: 0.9rem;
+  }
+
+  .info-admin span {
+    font-size: 0.7rem;
+  }
+
+  .usuario-actual {
+    display: none; /* Ocultar email en pantallas muy pequeñas */
+  }
+
+  .boton-cerrar-sesion {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+
+  .boton-cerrar-sesion span {
+    display: none;
+  }
+
+  .boton-cerrar-sesion svg {
+    margin: 0;
+  }
+
+  /* Estadísticas más compactas */
+  .seccion-estadisticas {
+    gap: 8px;
+  }
+
+  .tarjeta-estadistica {
+    padding: 12px 10px;
+    gap: 8px;
+  }
+
+  .icono-estadistica {
+    width: 40px;
+    height: 40px;
+  }
+
+  .icono-estadistica svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .numero-estadistica {
+    font-size: 1.3rem;
+  }
+
+  .etiqueta-estadistica {
+    font-size: 0.7rem;
+  }
+
+  /* Tabs aún más compactos */
+  .tab-admin {
+    padding: 7px 12px;
+    font-size: 0.75rem;
+  }
+
+  /* Contenido */
+  .contenido-admin {
+    padding: 12px;
+  }
+
+  .titulo-seccion-admin {
+    font-size: 1rem;
+  }
+
+  /* Filtros */
+  .seccion-filtros,
+  .seccion-filtros-carta {
+    padding: 12px;
+  }
+
+  .filtro-item label {
+    font-size: 0.75rem;
+  }
+
+  .filtro-item input,
+  .filtro-item select {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+
+  .boton-limpiar-filtros,
+  .boton-exportar-excel {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  /* Reservas */
+  .seccion-reservas-admin {
+    padding: 12px;
+  }
+
+  .lista-reservas-admin {
+    gap: 10px;
+  }
+
+  .tarjeta-reserva-admin {
+    padding: 10px;
+  }
+
+  .nombre-instalacion {
+    font-size: 0.85rem;
+  }
+
+  .reserva-fecha,
+  .reserva-horario,
+  .socio-nombre,
+  .socio-telefono,
+  .socio-personas {
+    font-size: 0.75rem;
+  }
+
+  .reserva-fecha svg,
+  .reserva-horario svg,
+  .socio-nombre svg,
+  .socio-telefono svg,
+  .socio-personas svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .boton-ver-detalle {
+    padding: 8px 12px;
+    font-size: 0.75rem;
+  }
+
+  .boton-ver-detalle svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* ==========================================================
+   CORRECCIÓN: Asegurar que Reservas y Carta tengan mismo estilo
+   ========================================================== */
+
+/* Estadísticas de Carta - mismo estilo que Reservas */
+.seccion-estadisticas-carta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+@media (max-width: 768px) {
+  .seccion-estadisticas-carta {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px;
+  }
+
+  .seccion-estadisticas-carta .tarjeta-estadistica {
+    padding: 14px 12px;
+    gap: 10px;
+  }
+
+  .seccion-estadisticas-carta .icono-estadistica {
+    width: 45px;
+    height: 45px;
+  }
+
+  .seccion-estadisticas-carta .icono-estadistica svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .seccion-estadisticas-carta .numero-estadistica {
+    font-size: 1.5rem;
+  }
+
+  .seccion-estadisticas-carta .etiqueta-estadistica {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .seccion-estadisticas-carta {
+    gap: 8px;
+  }
+
+  .seccion-estadisticas-carta .tarjeta-estadistica {
+    padding: 12px 10px;
+    gap: 8px;
+  }
+
+  .seccion-estadisticas-carta .icono-estadistica {
+    width: 40px;
+    height: 40px;
+  }
+
+  .seccion-estadisticas-carta .icono-estadistica svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .seccion-estadisticas-carta .numero-estadistica {
+    font-size: 1.3rem;
+  }
+
+  .seccion-estadisticas-carta .etiqueta-estadistica {
+    font-size: 0.7rem;
+  }
+}
