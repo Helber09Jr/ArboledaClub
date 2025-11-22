@@ -55,10 +55,17 @@ body {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(135deg, rgba(0, 40, 80, 0.9) 0%, rgba(0, 82, 180, 0.85) 50%, rgba(0, 60, 120, 0.9) 100%),
-    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="g" x1="0%25" y1="0%25" x2="100%25" y2="100%25"><stop offset="0%25" style="stop-color:%230052B4;stop-opacity:0.1"/><stop offset="100%25" style="stop-color:%23c8a95e;stop-opacity:0.05"/></linearGradient></defs><rect fill="url(%23g)" width="100" height="100"/></svg>');
+    linear-gradient(135deg, rgba(13, 37, 53, 0.85) 0%, rgba(0, 82, 180, 0.75) 50%, rgba(13, 37, 53, 0.85) 100%),
+    url('../imagenes/hero-fondo.jpg');
   background-size: cover;
+  background-position: center;
   z-index: 0;
+  animation: backgroundZoom 25s ease-in-out infinite alternate;
+}
+
+@keyframes backgroundZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.15); }
 }
 
 /* Partículas decorativas */
@@ -121,10 +128,10 @@ body {
   padding: 2px;
   background: linear-gradient(
     135deg,
-    var(--dorado),
+    #0d2535,
+    var(--azul-principal),
     var(--azul-suave),
-    var(--dorado),
-    rgba(255, 255, 255, 0.3)
+    #0d2535
   );
   background-size: 300% 300%;
   animation: borderGlow 4s ease infinite;
