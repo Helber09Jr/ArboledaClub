@@ -185,7 +185,9 @@
       "descripcion": "Masa frita rellena de queso, acompañado en salsa de guacamole (10 und).",
       "precio": 14.00,
       "imagen": "imagenes/menu/tequenos.jpg",
-      "opciones": null,
+      "opciones": {
+        "salsa": ["Guacamole", "Huancaína"]
+      },
       "guarniciones": null,
       "permiteObservacion": true
     },
@@ -196,7 +198,9 @@
       "descripcion": "Yucas prensadas rellenas de queso mozzarella, acompañadas con salsa huancaína (5 und).",
       "precio": 14.00,
       "imagen": "imagenes/menu/yucas-fritas.jpg",
-      "opciones": null,
+      "opciones": {
+        "salsa": ["Guacamole", "Huancaína"]
+      },
       "guarniciones": null,
       "permiteObservacion": true
     },
@@ -208,7 +212,7 @@
       "precio": 8.00,
       "imagen": "imagenes/menu/canchita-picante.jpg",
       "opciones": {
-        "picante": ["Bajo", "Normal", "Fuerte"]
+        "picante": ["Sin picante", "Picante"]
       },
       "guarniciones": null,
       "permiteObservacion": true
@@ -304,7 +308,10 @@
       "opciones": {
         "termino": ["3/4", "A punto", "Bien cocido"]
       },
-      "guarniciones": null,
+      "guarniciones": {
+        "lista": ["Papas amarillas fritas", "Arroz", "Ensalada"],
+        "max": 2
+      },
       "permiteObservacion": true
     },
     {
@@ -317,7 +324,10 @@
       "opciones": {
         "termino": ["3/4", "A punto", "Bien cocido"]
       },
-      "guarniciones": null,
+      "guarniciones": {
+        "lista": ["Papas amarillas fritas", "Arroz", "Ensalada"],
+        "max": 2
+      },
       "permiteObservacion": true
     },
     {
@@ -330,7 +340,10 @@
       "opciones": {
         "termino": ["3/4", "A punto", "Bien cocido"]
       },
-      "guarniciones": null,
+      "guarniciones": {
+        "lista": ["Papas amarillas fritas", "Arroz", "Ensalada"],
+        "max": 2
+      },
       "permiteObservacion": true
     },
     {
@@ -343,7 +356,10 @@
       "opciones": {
         "termino": ["3/4", "A punto", "Bien cocido"]
       },
-      "guarniciones": null,
+      "guarniciones": {
+        "lista": ["Papas amarillas fritas", "Arroz", "Ensalada"],
+        "max": 2
+      },
       "permiteObservacion": true
     },
     {
@@ -356,7 +372,10 @@
       "opciones": {
         "termino": ["3/4", "A punto", "Bien cocido"]
       },
-      "guarniciones": null,
+      "guarniciones": {
+        "lista": ["Papas amarillas fritas", "Arroz", "Ensalada"],
+        "max": 2
+      },
       "permiteObservacion": true
     },
     {
@@ -407,12 +426,12 @@
       "id": "chicharron-pollo",
       "categoria": "pollo",
       "nombre": "Chicharrón de Pollo",
-      "descripcion": "Trozos de pollo deshuesado, acompañado de arroz, papas fritas o zarza.",
+      "descripcion": "Trozos de pollo deshuesado, acompañado de arroz, papas fritas o ensalada.",
       "precio": 26.00,
       "imagen": "imagenes/menu/chicharron-pollo.jpg",
       "opciones": null,
       "guarniciones": {
-        "lista": ["Arroz", "Papas fritas", "Zarza criolla"],
+        "lista": ["Papas fritas", "Arroz", "Ensalada"],
         "max": 2
       },
       "permiteObservacion": true
@@ -518,7 +537,10 @@
       "precio": 26.00,
       "imagen": "imagenes/menu/chicharron-pescado.jpg",
       "opciones": null,
-      "guarniciones": null,
+      "guarniciones": {
+        "lista": ["Papas fritas", "Arroz", "Zarza criolla"],
+        "max": 2
+      },
       "permiteObservacion": true
     },
     {
@@ -531,7 +553,10 @@
       "opciones": {
         "picante": ["Sin picante", "Bajo", "Normal", "Fuerte"]
       },
-      "guarniciones": null,
+      "guarniciones": {
+        "lista": ["Papas fritas", "Arroz", "Ensalada"],
+        "max": 2
+      },
       "permiteObservacion": true
     },
     {
@@ -568,6 +593,7 @@
       "precio": 28.00,
       "imagen": "imagenes/menu/tallarin-pesto-bistec.jpg",
       "opciones": {
+        "tipo": ["Bistec", "Apanado"],
         "termino": ["3/4", "A punto", "Bien cocido"]
       },
       "guarniciones": null,
@@ -580,7 +606,9 @@
       "descripcion": "Fetuccini en salsa pesto acompañado de pollo apanado.",
       "precio": 28.00,
       "imagen": "imagenes/menu/fetuccini-pesto-apanado.jpg",
-      "opciones": null,
+      "opciones": {
+        "tipo": ["Bistec", "Apanado"]
+      },
       "guarniciones": null,
       "permiteObservacion": true
     },
@@ -603,6 +631,7 @@
       "precio": 22.00,
       "imagen": "imagenes/menu/tallarin-saltado.jpg",
       "opciones": {
+        "tipo": ["Carne", "Pollo"],
         "picante": ["Sin picante", "Bajo", "Normal", "Fuerte"]
       },
       "guarniciones": null,
@@ -638,7 +667,10 @@
       "precio": 15.00,
       "imagen": "imagenes/menu/kids-chicharron.jpg",
       "opciones": null,
-      "guarniciones": null,
+      "guarniciones": {
+        "lista": ["Papas fritas", "Arroz", "Ensalada"],
+        "max": 1
+      },
       "permiteObservacion": true
     },
     {
@@ -649,7 +681,10 @@
       "precio": 15.00,
       "imagen": "imagenes/menu/kids-nuggets.jpg",
       "opciones": null,
-      "guarniciones": null,
+      "guarniciones": {
+        "lista": ["Papas fritas", "Arroz", "Ensalada"],
+        "max": 1
+      },
       "permiteObservacion": true
     },
     {
@@ -660,7 +695,10 @@
       "precio": 15.00,
       "imagen": "imagenes/menu/kids-milanesa.jpg",
       "opciones": null,
-      "guarniciones": null,
+      "guarniciones": {
+        "lista": ["Papas fritas", "Arroz", "Ensalada"],
+        "max": 1
+      },
       "permiteObservacion": true
     },
     {
