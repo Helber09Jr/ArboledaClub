@@ -131,11 +131,12 @@ button {
 }
 
 .texto-carga {
+  font-family: var(--fuente-ui);
   color: var(--dorado-claro);
   font-size: 1.5rem;
-  font-weight: 700;
-  font-family: 'Playfair Display', serif;
-  letter-spacing: 3px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   margin-bottom: 30px;
   animation: fade-texto 1.5s ease-in-out infinite;
 }
@@ -1527,69 +1528,85 @@ button {
 }
 
 /* ==========================================================
-   FOOTER
+   FOOTER PREMIUM
    ========================================================== */
 .pie-pagina-reservas {
   background: linear-gradient(180deg, #051829 0%, var(--azul-principal) 100%);
   color: var(--blanco);
-  padding: 40px 20px;
+  padding: 50px 20px 40px;
   border-top: 3px solid var(--dorado-claro);
 }
 
 .contenedor-footer-reservas {
-  max-width: 1200px;
+  max-width: 800px;
   margin: 0 auto;
   text-align: center;
 }
 
-.logo-footer {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  margin: 0 auto 15px;
-  border: 2px solid var(--dorado);
-}
-
-.info-footer-reservas {
+.logo-footer-reservas {
   margin-bottom: 20px;
 }
 
-.info-footer-reservas p {
-  margin: 5px 0;
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.9);
+.logo-footer {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid var(--dorado);
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+  transition: transform 0.3s ease;
 }
 
-.info-footer-reservas a {
+.logo-footer:hover {
+  transform: scale(1.05);
+}
+
+.info-footer-reservas {
+  margin-bottom: 25px;
+}
+
+.info-footer-reservas .nombre-club {
+  font-family: var(--fuente-titulos);
+  font-size: 1.8rem;
+  font-weight: 700;
   color: var(--dorado-claro);
-  transition: color 0.3s;
+  margin: 0 0 5px;
+  letter-spacing: 1px;
 }
 
-.info-footer-reservas a:hover {
-  color: var(--dorado);
+.info-footer-reservas .ubicacion-club {
+  font-family: var(--fuente-ui);
+  font-size: 1rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .redes-footer-reservas {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin-bottom: 20px;
+  gap: 18px;
+  margin-bottom: 30px;
 }
 
 .redes-footer-reservas a {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 45px;
-  height: 45px;
-  background: rgba(255, 255, 255, 0.1);
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 50%;
+  border: 1px solid rgba(212, 175, 55, 0.3);
   transition: all 0.3s ease;
 }
 
 .redes-footer-reservas a:hover {
   background: var(--dorado);
-  transform: translateY(-3px);
+  border-color: var(--dorado);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
 }
 
 .redes-footer-reservas svg {
@@ -1598,9 +1615,33 @@ button {
   fill: var(--blanco);
 }
 
-.copyright-reservas {
-  font-size: 0.85rem;
+.creditos-footer-reservas {
+  margin-bottom: 20px;
+}
+
+.creditos-footer-reservas p {
+  font-family: var(--fuente-ui);
+  font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+.creditos-footer-reservas .autor {
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
+  color: var(--dorado-claro);
+  font-style: italic;
+  letter-spacing: 1px;
+}
+
+.copyright-reservas {
+  font-family: var(--fuente-ui);
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.copyright-reservas p {
+  margin: 0;
 }
 /* ==========================================================
    BOTÓN ADMIN EN HEADER
@@ -2683,30 +2724,43 @@ label:has(~ input[required])::after {
   }
   
   .pie-pagina-reservas {
-    padding: 30px 15px;
+    padding: 35px 15px 30px;
   }
-  
+
   .logo-footer {
     width: 70px;
     height: 70px;
   }
-  
-  .info-footer-reservas p {
-    font-size: 0.9rem;
+
+  .info-footer-reservas .nombre-club {
+    font-size: 1.4rem;
   }
-  
+
+  .info-footer-reservas .ubicacion-club {
+    font-size: 0.85rem;
+  }
+
+  .redes-footer-reservas {
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
   .redes-footer-reservas a {
     width: 40px;
     height: 40px;
   }
-  
+
   .redes-footer-reservas svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
   }
-  
-  .copyright-reservas {
+
+  .creditos-footer-reservas p {
     font-size: 0.8rem;
+  }
+
+  .copyright-reservas {
+    font-size: 0.75rem;
   }
   
   .toast-notificacion {

@@ -116,11 +116,12 @@ a {
 }
 
 .texto-carga {
+  font-family: var(--fuente-ui);
   color: var(--dorado-claro);
   font-size: 1.5rem;
-  font-weight: 700;
-  font-family: 'Poppins', sans-serif;
-  letter-spacing: 3px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   margin-bottom: 30px;
   animation: fade-texto 1.5s ease-in-out infinite;
 }
