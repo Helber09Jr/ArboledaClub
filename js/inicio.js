@@ -250,6 +250,7 @@ class ModalInstalacion {
     this.imagenesActuales = [];
     this.intervalCarrusel = null;
     this.inicializarEventos();
+    this.inicializarEventosGaleria();
   }
 
   inicializarEventos() {
@@ -272,18 +273,37 @@ class ModalInstalacion {
       if (e.key === 'Escape' && this.modal.classList.contains('activo')) {
         this.cerrar();
       } else if (e.key === 'ArrowLeft' && this.modal.classList.contains('activo')) {
-        this.irAImagen(-1);
+        this.navegarGaleria(-1);
       } else if (e.key === 'ArrowRight' && this.modal.classList.contains('activo')) {
-        this.irAImagen(1);
+        this.navegarGaleria(1);
       }
     });
+  }
+
+  inicializarEventosGaleria() {
+    const btnAnterior = document.getElementById('btnGaleriaAnterior');
+    const btnSiguiente = document.getElementById('btnGaleriaSiguiente');
+
+    if (btnAnterior) {
+      btnAnterior.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.navegarGaleria(-1);
+      });
+    }
+
+    if (btnSiguiente) {
+      btnSiguiente.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.navegarGaleria(1);
+      });
+    }
   }
 
   iniciarCarrusel() {
     this.detenerCarrusel();
     if (this.imagenesActuales.length > 1) {
       this.intervalCarrusel = setInterval(() => {
-        this.cambiarImagenCarrusel();
+        this.navegarGaleria(1);
       }, 4000);
     }
   }
@@ -295,28 +315,23 @@ class ModalInstalacion {
     }
   }
 
-  cambiarImagenCarrusel() {
-    if (this.imagenesActuales.length < 2) return;
-    this.irAImagen(1);
-  }
-
-  irAImagen(direccion) {
+  navegarGaleria(direccion) {
     if (this.imagenesActuales.length < 2) return;
 
     this.imagenActualIndex = (this.imagenActualIndex + direccion + this.imagenesActuales.length) % this.imagenesActuales.length;
-    this.actualizarImagen();
+    this.actualizarGaleria();
   }
 
   irAImagenDirecta(indice) {
     if (indice >= 0 && indice < this.imagenesActuales.length) {
       this.imagenActualIndex = indice;
-      this.actualizarImagen();
+      this.actualizarGaleria();
       this.detenerCarrusel();
       this.iniciarCarrusel();
     }
   }
 
-  actualizarImagen() {
+  actualizarGaleria() {
     const img = document.getElementById('subInstalacionImg');
     img.style.opacity = '0';
 
@@ -327,7 +342,7 @@ class ModalInstalacion {
 
     this.actualizarIndicadores();
     this.actualizarContador();
-    this.mostrarOcultarBotonesNavegacion();
+    this.actualizarBotonesNavegacion();
   }
 
   actualizarIndicadores() {
@@ -347,12 +362,16 @@ class ModalInstalacion {
     }
   }
 
-  mostrarOcultarBotonesNavegacion() {
-    if (this.imagenesActuales.length < 2) {
-      const btnAnterior = document.getElementById('btnGaleriaAnterior');
-      const btnSiguiente = document.getElementById('btnGaleriaSiguiente');
-      if (btnAnterior) btnAnterior.style.display = 'none';
-      if (btnSiguiente) btnSiguiente.style.display = 'none';
+  actualizarBotonesNavegacion() {
+    const btnAnterior = document.getElementById('btnGaleriaAnterior');
+    const btnSiguiente = document.getElementById('btnGaleriaSiguiente');
+
+    if (btnAnterior) {
+      btnAnterior.style.display = this.imagenesActuales.length > 1 ? 'flex' : 'none';
+    }
+
+    if (btnSiguiente) {
+      btnSiguiente.style.display = this.imagenesActuales.length > 1 ? 'flex' : 'none';
     }
   }
 
@@ -365,29 +384,12 @@ class ModalInstalacion {
       const dot = document.createElement('button');
       dot.className = `galeria-indicador ${index === 0 ? 'activo' : ''}`;
       dot.setAttribute('aria-label', `Ir a imagen ${index + 1}`);
-      dot.addEventListener('click', () => {
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation();
         this.irAImagenDirecta(index);
       });
       container.appendChild(dot);
     });
-  }
-
-  crearControlesGaleria() {
-    const btnAnterior = document.getElementById('btnGaleriaAnterior');
-    const btnSiguiente = document.getElementById('btnGaleriaSiguiente');
-
-    if (btnAnterior) {
-      btnAnterior.onclick = () => this.irAImagen(-1);
-      btnAnterior.style.display = this.imagenesActuales.length > 1 ? 'flex' : 'none';
-    }
-
-    if (btnSiguiente) {
-      btnSiguiente.onclick = () => this.irAImagen(1);
-      btnSiguiente.style.display = this.imagenesActuales.length > 1 ? 'flex' : 'none';
-    }
-
-    this.crearIndicadores();
-    this.actualizarContador();
   }
 
   abrir(instalacion) {
@@ -436,7 +438,7 @@ class ModalInstalacion {
     document.getElementById('subCapacidad').textContent = datos.capacidad;
     document.getElementById('accionContainer').innerHTML = '';
 
-    this.crearControlesGaleria();
+    this.configurarGaleria();
     this.iniciarCarrusel();
   }
 
@@ -471,8 +473,20 @@ class ModalInstalacion {
       tab.classList.toggle('activo', i === index);
     });
 
-    this.crearControlesGaleria();
+    this.configurarGaleria();
     this.iniciarCarrusel();
+  }
+
+  configurarGaleria() {
+    this.crearIndicadores();
+    this.actualizarContador();
+    this.actualizarBotonesNavegacion();
+  }
+
+  cambiarSubInstalacion(index) {
+    if (index !== this.subIndiceActual) {
+      this.mostrarSubInstalacion(index);
+    }
   }
 
   cerrar() {
