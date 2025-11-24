@@ -381,12 +381,20 @@
         <div class="tabs-sub-instalaciones" id="tabsContainer"></div>
       </div>
       <div class="modal-body-mejorado">
-        <div class="sub-instalacion-imagen">
+        <div class="sub-instalacion-imagen galeria-container">
           <img id="subInstalacionImg" src="" alt="Sub instalación">
-          <div class="indicadores-carrusel">
-            <span class="indicador-dot activo"></span>
-            <span class="indicador-dot"></span>
-          </div>
+          <button id="btnGaleriaAnterior" class="galeria-nav galeria-anterior" aria-label="Imagen anterior" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button id="btnGaleriaSiguiente" class="galeria-nav galeria-siguiente" aria-label="Imagen siguiente" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+          <div id="galeriaIndicadores" class="galeria-indicadores"></div>
+          <div id="galeriaContador" class="galeria-contador"></div>
         </div>
         <div class="sub-instalacion-info">
           <h3 id="subInstalacionNombre"></h3>

@@ -13,19 +13,50 @@ window.addEventListener('load', () => {
 const datosInstalaciones = {
   restaurante: {
     titulo: "Restaurante & Bar",
-    tipoAccion: "simple",
-    descripcion: "Disfruta de una experiencia gastronómica excepcional con platillos gourmet que encantan y bebidas premium que refrescan.",
-    caracteristicas: ["Menú variado", "Bar completo", "Ambiente elegante", "Atención personalizada"],
-    capacidad: "Capacidad: 120 personas",
-    imagenes: ["imagenes/instalaciones/restaurante-1.jpg", "imagenes/instalaciones/restaurante-2.jpg"]
+    tipoAccion: "reservar",
+    subInstalaciones: [
+      {
+        nombre: "Cocina",
+        descripcion: "Nuestra cocina está equipada con la más alta tecnología culinaria, donde nuestros chefs preparan exquisitos platillos.",
+        caracteristicas: ["Cocina abierta", "Chefs profesionales", "Ingredientes frescos", "Menú variado"],
+        capacidad: "Platos que encantan",
+        imagenes: ["imagenes/instalaciones/restaurante-cocina-1.jpg", "imagenes/instalaciones/restaurante-cocina-2.jpg", "imagenes/instalaciones/restaurante-cocina-3.jpg"]
+      },
+      {
+        nombre: "Bar",
+        descripcion: "Nuestro bar ofrece una amplia selección de bebidas premium, cócteles artesanales y un ambiente elegante.",
+        caracteristicas: ["Bebidas premium", "Cócteles artesanales", "Ambiente elegante", "Música en vivo"],
+        capacidad: "Bebidas que refrescan",
+        imagenes: ["imagenes/instalaciones/restaurante-bar-1.jpg", "imagenes/instalaciones/restaurante-bar-2.jpg", "imagenes/instalaciones/restaurante-bar-3.jpg"]
+      }
+    ]
   },
   piscina: {
     titulo: "Bungalows",
-    tipoAccion: "simple",
-    descripcion: "Nuestros búngalos están diseñados para ofrecerte confort, tranquilidad y una experiencia inolvidable.",
-    caracteristicas: ["Baño privado", "TV y Wifi", "Iluminación cálida", "Desayuno incluido"],
-    capacidad: "Mas informacion en seccion de reservas",
-    imagenes: ["imagenes/instalaciones/bungalows-1.jpg", "imagenes/instalaciones/bungalows-2.jpg"]
+    tipoAccion: "bungalow",
+    subInstalaciones: [
+      {
+        nombre: "Bungalow 1",
+        descripcion: "Bungalow con diseño moderno y todas las comodidades necesarias para una estancia confortable.",
+        caracteristicas: ["Baño privado", "TV y WiFi", "Iluminación cálida", "Desayuno incluido"],
+        capacidad: "Capacidad: 2-4 personas",
+        imagenes: ["imagenes/instalaciones/bungalows-1a.jpg", "imagenes/instalaciones/bungalows-1b.jpg", "imagenes/instalaciones/bungalows-1c.jpg"]
+      },
+      {
+        nombre: "Bungalow 2",
+        descripcion: "Bungalow espacioso con vista a los jardines y todas las amenidades para tu comodidad.",
+        caracteristicas: ["Baño privado", "TV y WiFi", "Aire acondicionado", "Terraza privada"],
+        capacidad: "Capacidad: 2-4 personas",
+        imagenes: ["imagenes/instalaciones/bungalows-2a.jpg", "imagenes/instalaciones/bungalows-2b.jpg", "imagenes/instalaciones/bungalows-2c.jpg"]
+      },
+      {
+        nombre: "Bungalow 3",
+        descripcion: "Bungalow de lujo con vistas panorámicas y acabados de primera categoría.",
+        caracteristicas: ["Baño privado", "TV y WiFi", "Amenities premium", "Acceso privado"],
+        capacidad: "Capacidad: 2-4 personas",
+        imagenes: ["imagenes/instalaciones/bungalows-3a.jpg", "imagenes/instalaciones/bungalows-3b.jpg", "imagenes/instalaciones/bungalows-3c.jpg"]
+      }
+    ]
   },
   parrillas: {
     titulo: "Zonas de Parrillas",
@@ -80,6 +111,13 @@ const datosInstalaciones = {
         caracteristicas: ["Semi-privada", "Mesa 4 personas", "Lavadero", "Acceso fácil"],
         capacidad: "Capacidad: 4-6 personas",
         imagenes: ["imagenes/instalaciones/parrillas-3a.jpg", "imagenes/instalaciones/parrillas-3b.jpg"]
+      },
+      {
+        nombre: "Parrilla 4",
+        descripcion: "Parrilla versátil con espacio flexible para diferentes tipos de reuniones.",
+        caracteristicas: ["Versátil", "Mesa 8 personas", "Lavadero", "Sombra natural"],
+        capacidad: "Capacidad: 8-10 personas",
+        imagenes: ["imagenes/instalaciones/parrillas-4a.jpg", "imagenes/instalaciones/parrillas-4b.jpg"]
       }
     ]
   },
@@ -121,6 +159,20 @@ const datosInstalaciones = {
         caracteristicas: ["Piso de cemento", "Aros oficiales", "Iluminación", "Líneas marcadas"],
         capacidad: "Capacidad: 10 jugadores",
         imagenes: ["imagenes/instalaciones/deportes-basquet-1.jpg", "imagenes/instalaciones/deportes-basquet-2.jpg"]
+      },
+      {
+        nombre: "Cancha de Paddle",
+        descripcion: "Cancha de paddle con malla profesional y piso sintético de alta calidad.",
+        caracteristicas: ["Piso sintético", "Malla profesional", "Iluminación LED", "Líneas marcadas"],
+        capacidad: "Capacidad: 4 jugadores",
+        imagenes: ["imagenes/instalaciones/deportes-paddle-1.jpg", "imagenes/instalaciones/deportes-paddle-2.jpg"]
+      },
+      {
+        nombre: "Cancha de Pickleball",
+        descripcion: "Cancha de pickleball con especificaciones reglamentarias para este deporte.",
+        caracteristicas: ["Piso de cemento", "Red oficial", "Iluminación", "Líneas marcadas"],
+        capacidad: "Capacidad: 4 jugadores",
+        imagenes: ["imagenes/instalaciones/deportes-pickleball-1.jpg", "imagenes/instalaciones/deportes-pickleball-2.jpg"]
       }
     ]
   },
@@ -129,18 +181,18 @@ const datosInstalaciones = {
     tipoAccion: "reservar",
     subInstalaciones: [
       {
-        nombre: "Cabañita",
-        descripcion: "Espacio rústico y acogedor ideal para reuniones íntimas.",
-        caracteristicas: ["Ambiente privado", "Decoración rústica", "Mesas incluidas", "Área verde"],
-        capacidad: "Capacidad: 20-30 personas",
-        imagenes: ["imagenes/instalaciones/eventos-cabanita-1.jpg", "imagenes/instalaciones/eventos-cabanita-2.jpg"]
-      },
-      {
         nombre: "Salón Principal",
         descripcion: "Salón amplio climatizado para eventos grandes y celebraciones.",
         caracteristicas: ["Climatizado", "Sonido incluido", "Iluminación", "Cocina disponible"],
         capacidad: "Capacidad: 100-150 personas",
         imagenes: ["imagenes/instalaciones/eventos-salon-1.jpg", "imagenes/instalaciones/eventos-salon-2.jpg"]
+      },
+      {
+        nombre: "Cabañita",
+        descripcion: "Espacio rústico y acogedor ideal para reuniones íntimas.",
+        caracteristicas: ["Ambiente privado", "Decoración rústica", "Mesas incluidas", "Área verde"],
+        capacidad: "Capacidad: 20-30 personas",
+        imagenes: ["imagenes/instalaciones/eventos-cabanita-1.jpg", "imagenes/instalaciones/eventos-cabanita-2.jpg"]
       },
       {
         nombre: "Zona Piscina",
@@ -210,7 +262,7 @@ class ModalInstalacion {
     });
 
     this.btnCerrar.addEventListener('click', () => this.cerrar());
-    
+
     const overlay = this.modal.querySelector('.modal-overlay');
     if (overlay) {
       overlay.addEventListener('click', () => this.cerrar());
@@ -219,15 +271,21 @@ class ModalInstalacion {
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && this.modal.classList.contains('activo')) {
         this.cerrar();
+      } else if (e.key === 'ArrowLeft' && this.modal.classList.contains('activo')) {
+        this.irAImagen(-1);
+      } else if (e.key === 'ArrowRight' && this.modal.classList.contains('activo')) {
+        this.irAImagen(1);
       }
     });
   }
 
   iniciarCarrusel() {
     this.detenerCarrusel();
-    this.intervalCarrusel = setInterval(() => {
-      this.cambiarImagenCarrusel();
-    }, 4000);
+    if (this.imagenesActuales.length > 1) {
+      this.intervalCarrusel = setInterval(() => {
+        this.cambiarImagenCarrusel();
+      }, 4000);
+    }
   }
 
   detenerCarrusel() {
@@ -239,20 +297,97 @@ class ModalInstalacion {
 
   cambiarImagenCarrusel() {
     if (this.imagenesActuales.length < 2) return;
-    
-    this.imagenActualIndex = (this.imagenActualIndex + 1) % this.imagenesActuales.length;
+    this.irAImagen(1);
+  }
+
+  irAImagen(direccion) {
+    if (this.imagenesActuales.length < 2) return;
+
+    this.imagenActualIndex = (this.imagenActualIndex + direccion + this.imagenesActuales.length) % this.imagenesActuales.length;
+    this.actualizarImagen();
+  }
+
+  irAImagenDirecta(indice) {
+    if (indice >= 0 && indice < this.imagenesActuales.length) {
+      this.imagenActualIndex = indice;
+      this.actualizarImagen();
+      this.detenerCarrusel();
+      this.iniciarCarrusel();
+    }
+  }
+
+  actualizarImagen() {
     const img = document.getElementById('subInstalacionImg');
-    const dots = document.querySelectorAll('.indicador-dot');
-    
     img.style.opacity = '0';
+
     setTimeout(() => {
       img.src = this.imagenesActuales[this.imagenActualIndex];
       img.style.opacity = '1';
-    }, 250);
-    
+    }, 150);
+
+    this.actualizarIndicadores();
+    this.actualizarContador();
+    this.mostrarOcultarBotonesNavegacion();
+  }
+
+  actualizarIndicadores() {
+    const dotsContainer = document.getElementById('galeriaIndicadores');
+    if (!dotsContainer) return;
+
+    const dots = dotsContainer.querySelectorAll('.galeria-indicador');
     dots.forEach((dot, i) => {
       dot.classList.toggle('activo', i === this.imagenActualIndex);
     });
+  }
+
+  actualizarContador() {
+    const contador = document.getElementById('galeriaContador');
+    if (contador && this.imagenesActuales.length > 1) {
+      contador.textContent = `${this.imagenActualIndex + 1}/${this.imagenesActuales.length}`;
+    }
+  }
+
+  mostrarOcultarBotonesNavegacion() {
+    if (this.imagenesActuales.length < 2) {
+      const btnAnterior = document.getElementById('btnGaleriaAnterior');
+      const btnSiguiente = document.getElementById('btnGaleriaSiguiente');
+      if (btnAnterior) btnAnterior.style.display = 'none';
+      if (btnSiguiente) btnSiguiente.style.display = 'none';
+    }
+  }
+
+  crearIndicadores() {
+    const container = document.getElementById('galeriaIndicadores');
+    if (!container) return;
+
+    container.innerHTML = '';
+    this.imagenesActuales.forEach((_, index) => {
+      const dot = document.createElement('button');
+      dot.className = `galeria-indicador ${index === 0 ? 'activo' : ''}`;
+      dot.setAttribute('aria-label', `Ir a imagen ${index + 1}`);
+      dot.addEventListener('click', () => {
+        this.irAImagenDirecta(index);
+      });
+      container.appendChild(dot);
+    });
+  }
+
+  crearControlesGaleria() {
+    const btnAnterior = document.getElementById('btnGaleriaAnterior');
+    const btnSiguiente = document.getElementById('btnGaleriaSiguiente');
+
+    if (btnAnterior) {
+      btnAnterior.onclick = () => this.irAImagen(-1);
+      btnAnterior.style.display = this.imagenesActuales.length > 1 ? 'flex' : 'none';
+    }
+
+    if (btnSiguiente) {
+      btnSiguiente.onclick = () => this.irAImagen(1);
+      btnSiguiente.style.display = this.imagenesActuales.length > 1 ? 'flex' : 'none';
+    }
+
+    this.crearIndicadores();
+    this.actualizarContador();
   }
 
   abrir(instalacion) {
@@ -263,7 +398,7 @@ class ModalInstalacion {
     this.subIndiceActual = 0;
 
     document.getElementById('modalTitulo').textContent = datos.titulo;
-    
+
     const tabsContainer = document.getElementById('tabsContainer');
     tabsContainer.innerHTML = '';
 
@@ -283,26 +418,26 @@ class ModalInstalacion {
     this.modal.classList.add('activo');
     document.body.style.overflow = 'hidden';
     this.btnCerrar.focus();
-    this.iniciarCarrusel();
   }
 
   mostrarInstalacionSimple(datos) {
     this.imagenesActuales = datos.imagenes;
     this.imagenActualIndex = 0;
-    
+
     const img = document.getElementById('subInstalacionImg');
     img.src = datos.imagenes[0];
-    
+
     document.getElementById('subInstalacionNombre').textContent = datos.titulo;
     document.getElementById('subInstalacionDesc').textContent = datos.descripcion;
-    
+
     const caracContainer = document.getElementById('subCaracteristicas');
     caracContainer.innerHTML = datos.caracteristicas.map(c => `<span class="sub-check">${c}</span>`).join('');
-    
+
     document.getElementById('subCapacidad').textContent = datos.capacidad;
     document.getElementById('accionContainer').innerHTML = '';
-    
-    this.actualizarIndicadores();
+
+    this.crearControlesGaleria();
+    this.iniciarCarrusel();
   }
 
   mostrarSubInstalacion(index) {
@@ -312,22 +447,18 @@ class ModalInstalacion {
     this.imagenActualIndex = 0;
 
     const img = document.getElementById('subInstalacionImg');
-    img.style.opacity = '0';
-    setTimeout(() => {
-      img.src = sub.imagenes[0];
-      img.style.opacity = '1';
-    }, 150);
+    img.src = sub.imagenes[0];
 
     document.getElementById('subInstalacionNombre').textContent = sub.nombre;
     document.getElementById('subInstalacionDesc').textContent = sub.descripcion;
-    
+
     const caracContainer = document.getElementById('subCaracteristicas');
     caracContainer.innerHTML = sub.caracteristicas.map(c => `<span class="sub-check">${c}</span>`).join('');
-    
+
     document.getElementById('subCapacidad').textContent = sub.capacidad;
 
     const accionContainer = document.getElementById('accionContainer');
-    if (this.instalacionActual.tipoAccion === 'reservar') {
+    if (this.instalacionActual.tipoAccion === 'reservar' || this.instalacionActual.tipoAccion === 'bungalow') {
       accionContainer.innerHTML = `<a href="reservas.html" class="boton-reservar-modal">Reservar</a>`;
     } else if (this.instalacionActual.tipoAccion === 'administracion') {
       accionContainer.innerHTML = `<div class="nota-administracion">📋 Solicitar en administración o guardianía</div>`;
@@ -340,21 +471,8 @@ class ModalInstalacion {
       tab.classList.toggle('activo', i === index);
     });
 
-    this.actualizarIndicadores();
+    this.crearControlesGaleria();
     this.iniciarCarrusel();
-  }
-
-  actualizarIndicadores() {
-    const dots = document.querySelectorAll('.indicador-dot');
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('activo', i === this.imagenActualIndex);
-    });
-  }
-
-  cambiarSubInstalacion(index) {
-    if (index !== this.subIndiceActual) {
-      this.mostrarSubInstalacion(index);
-    }
   }
 
   cerrar() {
