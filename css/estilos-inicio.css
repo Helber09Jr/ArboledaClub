@@ -1480,7 +1480,36 @@ a {
   border-color: rgba(255, 255, 255, 0.6);
 }
 
-/* WhatsApp flotante mejorado (reemplaza el anterior) */
+/* =====================================================
+   CLASES DE IMÁGENES PARA CADA INSTALACIÓN PRINCIPAL
+   ===================================================== */
+
+.imagen-restaurante {
+  background-image: url('imagenes/instalaciones/restaurante-principal.jpg');
+}
+
+.imagen-parrillas {
+  background-image: url('imagenes/instalaciones/parrillas-principal.jpg');
+}
+
+.imagen-deportes {
+  background-image: url('imagenes/instalaciones/deportes-principal.jpg');
+}
+
+.imagen-eventos {
+  background-image: url('imagenes/instalaciones/eventos-principal.jpg');
+}
+
+.imagen-recreacion {
+  background-image: url('imagenes/instalaciones/recreacion-principal.jpg');
+}
+
+.imagen-bungalows {
+  background-image: url('imagenes/instalaciones/bungalows-principal.jpg');
+}
+
+/* ===================================================== */
+
 .whatsapp-flotante {
   position: fixed;
   bottom: 25px;
