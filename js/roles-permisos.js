@@ -124,7 +124,7 @@ export const ROLES_DEFINIDOS = {
 
   gerente: {
     id: 'gerente',
-    nombre: 'Gerente',
+    nombre: 'Administrador',
     descripcion: 'Gestiona reservas y menú (acceso completo a operaciones)',
     color: '#6C63FF',
     esRolBase: true,
