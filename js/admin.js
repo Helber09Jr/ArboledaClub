@@ -590,6 +590,13 @@ async function cambiarEstado(nuevoEstado) {
     return;
   }
 
+  // VALIDACIÓN DE PERMISO
+  if (!verificarPermiso(usuarioAdminData, 'reservas.cambiar_estado')) {
+    await registrarAccesoDenegado(usuarioActual.email, 'cambiar_estado', `reserva:${reservaSeleccionada.id}`);
+    mostrarToast('No tienes permiso para cambiar el estado de reservas');
+    return;
+  }
+
   if (reservaSeleccionada.estado === nuevoEstado) {
     mostrarToast('La reserva ya tiene este estado');
     return;
@@ -1514,6 +1521,13 @@ async function guardarEtiquetasPlato() {
     return;
   }
 
+  // VALIDACIÓN DE PERMISO
+  if (!verificarPermiso(usuarioAdminData, 'carta.modificar')) {
+    await registrarAccesoDenegado(usuarioActual.email, 'modificar_etiquetas', `plato:${platoSeleccionado.id}`);
+    mostrarToast('No tienes permiso para modificar etiquetas de platos');
+    return;
+  }
+
   // Obtener etiquetas seleccionadas
   const etiquetasSeleccionadas = [];
 
@@ -1591,6 +1605,13 @@ async function toggleAgotado(platoId) {
   const plato = platosData.find(p => p.id === platoId);
   if (!plato) {
     mostrarToast('Plato no encontrado');
+    return;
+  }
+
+  // VALIDACIÓN DE PERMISO
+  if (!verificarPermiso(usuarioAdminData, 'carta.modificar')) {
+    await registrarAccesoDenegado(usuarioActual.email, 'toggle_agotado', `plato:${platoId}`);
+    mostrarToast('No tienes permiso para cambiar la disponibilidad de platos');
     return;
   }
 
