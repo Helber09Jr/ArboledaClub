@@ -138,6 +138,24 @@
           </svg>
           Gestión de Carta
         </button>
+        <button class="tab-admin" data-tab="usuarios">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          Gestión de Usuarios
+        </button>
+        <button class="tab-admin" data-tab="auditoria">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
+          Auditoría y Logs
+        </button>
       </nav>
     </header>
 
@@ -393,6 +411,116 @@
         </section>
 
       </div><!-- Fin tabCarta -->
+
+      <!-- ========== PESTAÑA GESTIÓN DE USUARIOS ========== -->
+      <div id="tabUsuarios" class="tab-content">
+
+        <section class="seccion-usuarios">
+          <div class="cabecera-usuarios">
+            <h2 class="titulo-seccion-admin">Usuarios Administrativos</h2>
+            <button id="btnAgregarUsuario" class="boton-agregar-usuario">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="8.5" cy="7" r="4"></circle>
+                <line x1="20" y1="8" x2="20" y2="14"></line>
+                <line x1="23" y1="11" x2="17" y2="11"></line>
+              </svg>
+              Agregar Usuario
+            </button>
+          </div>
+
+          <div class="tabla-usuarios-admin">
+            <table>
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Nombre</th>
+                  <th>Rol</th>
+                  <th>Estado</th>
+                  <th>Último Acceso</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tablaUsuariosAdmin">
+                <tr>
+                  <td colspan="6" class="sin-datos">Cargando usuarios...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </div><!-- Fin tabUsuarios -->
+
+      <!-- ========== PESTAÑA AUDITORÍA ========== -->
+      <div id="tabAuditoria" class="tab-content">
+
+        <section class="seccion-auditoria">
+          <h2 class="titulo-seccion-admin">Registro de Auditoría</h2>
+
+          <!-- Filtros de auditoría -->
+          <div class="filtros-auditoria">
+            <div class="filtro-item">
+              <label for="filtroAudUsuario">Usuario</label>
+              <input type="text" id="filtroAudUsuario" placeholder="Email del usuario...">
+            </div>
+            <div class="filtro-item">
+              <label for="filtroAudFechaInicio">Desde</label>
+              <input type="date" id="filtroAudFechaInicio">
+            </div>
+            <div class="filtro-item">
+              <label for="filtroAudFechaFin">Hasta</label>
+              <input type="date" id="filtroAudFechaFin">
+            </div>
+            <div class="filtro-item">
+              <label for="filtroAudAccion">Tipo de Acción</label>
+              <select id="filtroAudAccion">
+                <option value="">Todas</option>
+                <option value="RESERVA">Reservas</option>
+                <option value="PLATO">Platos</option>
+                <option value="USUARIO">Usuarios</option>
+                <option value="ACCESO_DENEGADO">Acceso Denegado</option>
+              </select>
+            </div>
+            <button id="btnLimpiarFiltrosAud" class="boton-limpiar-filtros">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="1 4 1 10 7 10"></polyline>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+              </svg>
+              Limpiar
+            </button>
+            <button id="btnExportarAuditoria" class="boton-exportar-excel">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Exportar
+            </button>
+          </div>
+
+          <!-- Tabla de auditoría -->
+          <div class="tabla-auditoria-admin">
+            <table>
+              <thead>
+                <tr>
+                  <th>Fecha/Hora</th>
+                  <th>Usuario</th>
+                  <th>Acción</th>
+                  <th>Recurso</th>
+                  <th>Detalles</th>
+                </tr>
+              </thead>
+              <tbody id="tablaAuditoriaAdmin">
+                <tr>
+                  <td colspan="5" class="sin-datos">Cargando registros...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </div><!-- Fin tabAuditoria -->
 
     </main>
   </div>
