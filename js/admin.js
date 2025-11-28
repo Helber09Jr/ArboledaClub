@@ -1779,6 +1779,32 @@ function inicializarEventosRoles() {
   if (btnLimpiarFiltrosAud) {
     btnLimpiarFiltrosAud.onclick = limpiarFiltrosAuditoria;
   }
+
+  // Event listeners para modal de crear usuario
+  const btnCerrarModalUsuario = document.getElementById('btnCerrarModalUsuario');
+  const btnCancelarUsuario = document.getElementById('btnCancelarUsuario');
+  const formularioAgregarUsuario = document.getElementById('formularioAgregarUsuario');
+
+  if (btnCerrarModalUsuario) {
+    btnCerrarModalUsuario.onclick = cerrarModalAgregarUsuario;
+  }
+
+  if (btnCancelarUsuario) {
+    btnCancelarUsuario.onclick = cerrarModalAgregarUsuario;
+  }
+
+  if (formularioAgregarUsuario) {
+    formularioAgregarUsuario.onsubmit = crearUsuarioAdmin;
+  }
+
+  // Cerrar modal al hacer click en overlay
+  const modalAgregarUsuario = document.getElementById('modalAgregarUsuario');
+  if (modalAgregarUsuario) {
+    const overlay = modalAgregarUsuario.querySelector('.modal-overlay-admin');
+    if (overlay) {
+      overlay.onclick = cerrarModalAgregarUsuario;
+    }
+  }
 }
 
 // ==========================================================
@@ -1835,19 +1861,114 @@ function renderizarTablaUsuarios() {
 }
 
 function abrirModalAgregarUsuario() {
-  // Placeholder - se implementará con modal real
-  mostrarToast('Funcionalidad de agregar usuario en desarrollo');
-  console.log('Abrir modal de agregar usuario');
+  const modal = document.getElementById('modalAgregarUsuario');
+  const formulario = document.getElementById('formularioAgregarUsuario');
+
+  if (modal && formulario) {
+    modal.classList.add('activo');
+    document.body.style.overflow = 'hidden';
+    formulario.reset();
+  }
+}
+
+function cerrarModalAgregarUsuario() {
+  const modal = document.getElementById('modalAgregarUsuario');
+  if (modal) {
+    modal.classList.remove('activo');
+    document.body.style.overflow = 'auto';
+  }
+}
+
+async function crearUsuarioAdmin(evento) {
+  evento.preventDefault();
+
+  // Obtener valores del formulario
+  const uid = document.getElementById('adminUID').value.trim();
+  const email = document.getElementById('adminEmail').value.trim();
+  const nombre = document.getElementById('adminNombre').value.trim();
+  const rol = document.getElementById('adminRol').value;
+
+  // Validaciones
+  if (!uid || !email || !nombre || !rol) {
+    mostrarToast('Todos los campos son obligatorios');
+    return;
+  }
+
+  if (uid.length < 20) {
+    mostrarToast('El UID parece inválido. Verifica que hayas copiado correctamente');
+    return;
+  }
+
+  if (!email.includes('@')) {
+    mostrarToast('Email inválido');
+    return;
+  }
+
+  try {
+    // Verificar permiso
+    if (!verificarPermiso(usuarioAdminData, 'usuarios.crear')) {
+      await registrarAccesoDenegado(usuarioActual.email, 'crear_usuario', `usuario:${email}`);
+      mostrarToast('No tienes permiso para crear usuarios');
+      return;
+    }
+
+    // Crear usuario en Firebase
+    const usuariosRef = collection(db, 'usuarios_admin');
+    const docRef = doc(usuariosRef, uid);
+
+    await setDoc(docRef, {
+      uid: uid,
+      email: email,
+      nombre: nombre,
+      rol: rol,
+      estado: 'activo',
+      permisos_custom: {},
+      fechaCreacion: serverTimestamp(),
+      ultimoAcceso: null,
+      historialAcceso: []
+    });
+
+    // Registrar en auditoría
+    await registrarAccionExitosa(
+      usuarioActual.email,
+      'crear',
+      'usuario',
+      uid,
+      {
+        antes: {},
+        despues: { email, nombre, rol }
+      }
+    );
+
+    // Cerrar modal
+    cerrarModalAgregarUsuario();
+
+    // Recargar tabla de usuarios
+    await cargarUsuariosAdmin();
+
+    mostrarToast(`✅ Usuario ${nombre} creado exitosamente`);
+
+  } catch (error) {
+    console.error('Error al crear usuario:', error);
+
+    if (error.code === 'permission-denied') {
+      mostrarToast('Error de permisos. Verifica las reglas de seguridad de Firebase');
+    } else if (error.message.includes('Document already exists')) {
+      mostrarToast('Este UID ya existe. Usa otro diferente');
+    } else {
+      mostrarToast('Error al crear usuario: ' + error.message);
+    }
+  }
 }
 
 async function editarUsuarioAdmin(usuarioId) {
-  // Placeholder
+  // Placeholder - se implementará después
   mostrarToast('Funcionalidad de editar usuario en desarrollo');
   console.log('Editar usuario:', usuarioId);
 }
 
 async function eliminarUsuarioAdmin(usuarioId) {
-  // Placeholder
+  // Placeholder - se implementará después
   mostrarToast('Funcionalidad de eliminar usuario en desarrollo');
   console.log('Eliminar usuario:', usuarioId);
 }
