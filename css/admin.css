@@ -3353,3 +3353,439 @@ body {
     font-size: 0.7rem;
   }
 }
+
+/* ==========================================================
+   GESTIÓN DE USUARIOS - ESTILOS
+   ========================================================== */
+
+.seccion-usuarios {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 30px;
+}
+
+.cabecera-usuarios {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f0f2f5;
+}
+
+.cabecera-usuarios h2 {
+  font-size: 1.8rem;
+  color: var(--azul-principal);
+  font-family: var(--fuente-titulos);
+  margin: 0;
+}
+
+.boton-agregar-usuario {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, var(--azul-principal) 0%, var(--azul-oscuro) 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 82, 180, 0.25);
+}
+
+.boton-agregar-usuario:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 82, 180, 0.35);
+}
+
+.boton-agregar-usuario svg {
+  width: 18px;
+  height: 18px;
+}
+
+.tabla-usuarios-admin {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #e8e5e0;
+}
+
+.tabla-usuarios-admin table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.tabla-usuarios-admin thead {
+  background: #f8f7f5;
+  border-bottom: 2px solid #e8e5e0;
+}
+
+.tabla-usuarios-admin th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--azul-principal);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tabla-usuarios-admin tbody tr {
+  border-bottom: 1px solid #f0f2f5;
+  transition: background 0.2s ease;
+}
+
+.tabla-usuarios-admin tbody tr:hover {
+  background: #f8f7f5;
+}
+
+.tabla-usuarios-admin td {
+  padding: 12px 15px;
+  color: #2a2a2a;
+}
+
+.tabla-usuarios-admin .sin-datos {
+  text-align: center;
+  color: #999;
+  padding: 30px;
+  font-style: italic;
+}
+
+.usuario-email {
+  font-weight: 600;
+  color: var(--azul-principal);
+}
+
+.usuario-rol {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.rol-super-admin {
+  background: rgba(255, 107, 107, 0.2);
+  color: #FF6B6B;
+}
+
+.rol-admin-reservas {
+  background: rgba(78, 205, 196, 0.2);
+  color: #4ECDC4;
+}
+
+.rol-admin-carta {
+  background: rgba(149, 225, 211, 0.2);
+  color: #5cd0be;
+}
+
+.rol-recepcionista {
+  background: rgba(255, 230, 109, 0.2);
+  color: #FFB800;
+}
+
+.usuario-estado {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.estado-activo {
+  background: rgba(39, 174, 96, 0.2);
+  color: #27ae60;
+}
+
+.estado-inactivo {
+  background: rgba(189, 189, 189, 0.2);
+  color: #999;
+}
+
+.estado-suspendido {
+  background: rgba(231, 76, 60, 0.2);
+  color: #e74c3c;
+}
+
+.usuario-acceso {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.acciones-usuario {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-editar-usuario, .btn-eliminar-usuario {
+  padding: 6px 12px;
+  border: 1px solid #e8e5e0;
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.btn-editar-usuario {
+  color: var(--azul-principal);
+  border-color: var(--azul-principal);
+}
+
+.btn-editar-usuario:hover {
+  background: var(--azul-principal);
+  color: #fff;
+}
+
+.btn-eliminar-usuario {
+  color: var(--rojo-error);
+  border-color: var(--rojo-error);
+}
+
+.btn-eliminar-usuario:hover {
+  background: var(--rojo-error);
+  color: #fff;
+}
+
+/* ==========================================================
+   AUDITORÍA Y LOGS - ESTILOS
+   ========================================================== */
+
+.seccion-auditoria {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 30px;
+}
+
+.seccion-auditoria .titulo-seccion-admin {
+  margin-bottom: 25px;
+  color: var(--azul-principal);
+}
+
+.filtros-auditoria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 25px;
+  padding: 20px;
+  background: #f8f7f5;
+  border-radius: 8px;
+}
+
+.filtros-auditoria .filtro-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.filtros-auditoria label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--azul-principal);
+}
+
+.filtros-auditoria input,
+.filtros-auditoria select {
+  padding: 10px 12px;
+  border: 1px solid #e8e5e0;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background: #fff;
+  color: #2a2a2a;
+  transition: border-color 0.2s ease;
+}
+
+.filtros-auditoria input:focus,
+.filtros-auditoria select:focus {
+  outline: none;
+  border-color: var(--azul-principal);
+  box-shadow: 0 0 0 3px rgba(0, 82, 180, 0.1);
+}
+
+.filtros-auditoria .boton-limpiar-filtros,
+.filtros-auditoria .boton-exportar-excel {
+  align-self: flex-end;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filtros-auditoria .boton-limpiar-filtros {
+  background: #e8e5e0;
+  color: #2a2a2a;
+}
+
+.filtros-auditoria .boton-limpiar-filtros:hover {
+  background: #d8d5d0;
+}
+
+.filtros-auditoria .boton-exportar-excel {
+  background: var(--verde-exito);
+  color: #fff;
+}
+
+.filtros-auditoria .boton-exportar-excel:hover {
+  background: #229957;
+}
+
+.tabla-auditoria-admin {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #e8e5e0;
+}
+
+.tabla-auditoria-admin table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.tabla-auditoria-admin thead {
+  background: #f8f7f5;
+  border-bottom: 2px solid #e8e5e0;
+}
+
+.tabla-auditoria-admin th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--azul-principal);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tabla-auditoria-admin tbody tr {
+  border-bottom: 1px solid #f0f2f5;
+  transition: background 0.2s ease;
+}
+
+.tabla-auditoria-admin tbody tr:hover {
+  background: #f8f7f5;
+}
+
+.tabla-auditoria-admin td {
+  padding: 12px 15px;
+  color: #2a2a2a;
+}
+
+.tabla-auditoria-admin .sin-datos {
+  text-align: center;
+  color: #999;
+  padding: 30px;
+  font-style: italic;
+}
+
+.aud-fecha {
+  font-size: 0.85rem;
+  color: #666;
+  white-space: nowrap;
+}
+
+.aud-usuario {
+  font-weight: 600;
+  color: var(--azul-principal);
+}
+
+.aud-accion {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.accion-crear {
+  background: rgba(39, 174, 96, 0.2);
+  color: #27ae60;
+}
+
+.accion-modificar {
+  background: rgba(52, 152, 219, 0.2);
+  color: #3498db;
+}
+
+.accion-eliminar {
+  background: rgba(231, 76, 60, 0.2);
+  color: #e74c3c;
+}
+
+.accion-acceso-denegado {
+  background: rgba(243, 156, 18, 0.2);
+  color: #f39c12;
+}
+
+.aud-recurso {
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.aud-detalles {
+  font-size: 0.85rem;
+  color: #666;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Responsive para usuarios y auditoría */
+@media (max-width: 768px) {
+  .seccion-usuarios,
+  .seccion-auditoria {
+    padding: 20px;
+  }
+
+  .cabecera-usuarios {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .boton-agregar-usuario {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .tabla-usuarios-admin,
+  .tabla-auditoria-admin {
+    font-size: 0.85rem;
+  }
+
+  .tabla-usuarios-admin th,
+  .tabla-auditoria-admin th {
+    padding: 10px;
+    font-size: 0.75rem;
+  }
+
+  .tabla-usuarios-admin td,
+  .tabla-auditoria-admin td {
+    padding: 8px 10px;
+  }
+
+  .filtros-auditoria {
+    grid-template-columns: 1fr;
+  }
+
+  .acciones-usuario {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
