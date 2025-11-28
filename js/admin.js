@@ -24,9 +24,26 @@ import {
   serverTimestamp
 } from './firebase-config.js';
 
+import {
+  ROLES_DEFINIDOS,
+  verificarPermiso,
+  obtenerPermisosUsuario,
+  obtenerUsuariosAdmin,
+  obtenerUsuarioAdminPorUid,
+  registrarAuditoria,
+  registrarAcceso,
+  registrarAccesoDenegado,
+  registrarAccionExitosa
+} from './roles-permisos.js';
+
 // ==========================================================
 // VARIABLES GLOBALES
 // ==========================================================
+
+// Usuario actual y rol
+let usuarioActual = null;
+let usuarioAdminData = null;
+let permisos = [];
 
 let reservasData = [];
 let reservasFiltradas = [];
@@ -40,6 +57,11 @@ let estadosPlatosData = {};
 let etiquetasData = {};
 let platoSeleccionado = null;
 
+// Variables para gestión de usuarios y auditoría
+let usuariosAdminData = [];
+let auditData = [];
+let auditFiltrada = [];
+
 // ==========================================================
 // INICIALIZACIÓN
 // ==========================================================
@@ -49,12 +71,38 @@ document.addEventListener('DOMContentLoaded', () => {
   inicializarEventos();
 });
 
-function verificarAutenticacion() {
-  onAuthStateChanged(auth, (usuario) => {
+async function verificarAutenticacion() {
+  onAuthStateChanged(auth, async (usuario) => {
     if (usuario) {
+      usuarioActual = usuario;
+
+      // Obtener datos de usuario admin
+      usuarioAdminData = await obtenerUsuarioAdminPorUid(usuario.uid);
+
+      if (!usuarioAdminData) {
+        // Usuario no tiene rol asignado
+        console.error('Usuario sin rol asignado');
+        cerrarSesion();
+        mostrarToast('No tienes permisos de acceso');
+        return;
+      }
+
+      // Obtener permisos del usuario
+      permisos = obtenerPermisosUsuario(usuarioAdminData);
+
+      // Registrar acceso
+      await registrarAcceso(usuario.uid);
+
       mostrarPanel();
-      document.getElementById('usuarioActual').textContent = usuario.email;
+      document.getElementById('usuarioActual').textContent = `${usuarioAdminData.nombre} (${ROLES_DEFINIDOS[usuarioAdminData.rol].nombre})`;
+
+      // Proteger pestañas según permisos
+      protegerPestanas();
+
+      // Inicializar listeners
       inicializarListenerReservas();
+      inicializarEventosRoles();
+
     } else {
       mostrarLogin();
     }
@@ -1630,9 +1678,274 @@ function actualizarEstadisticasCarta() {
 }
 
 // ==========================================================
+// PROTECCIÓN DE PESTAÑAS POR ROLES
+// ==========================================================
+
+function protegerPestanas() {
+  // Solo super_admin puede ver gestión de usuarios
+  const tabUsuarios = document.querySelector('[data-tab="usuarios"]');
+  const tabAuditoria = document.querySelector('[data-tab="auditoria"]');
+
+  if (tabUsuarios) {
+    if (usuarioAdminData.rol === 'super_admin') {
+      tabUsuarios.style.display = 'flex';
+    } else {
+      tabUsuarios.style.display = 'none';
+    }
+  }
+
+  if (tabAuditoria) {
+    if (usuarioAdminData.rol === 'super_admin') {
+      tabAuditoria.style.display = 'flex';
+    } else {
+      tabAuditoria.style.display = 'none';
+    }
+  }
+
+  // Ocultar tab de carta si no tiene permiso
+  const tabCarta = document.querySelector('[data-tab="carta"]');
+  if (tabCarta && !verificarPermiso(usuarioAdminData, 'carta.leer')) {
+    tabCarta.style.display = 'none';
+  }
+
+  // Ocultar tab de reservas si no tiene permiso
+  const tabReservas = document.querySelector('[data-tab="reservas"]');
+  if (tabReservas && !verificarPermiso(usuarioAdminData, 'reservas.leer')) {
+    tabReservas.style.display = 'none';
+  }
+}
+
+// ==========================================================
+// INICIALIZAR EVENTOS DE ROLES Y USUARIOS
+// ==========================================================
+
+function inicializarEventosRoles() {
+  // Botón agregar usuario
+  const btnAgregarUsuario = document.getElementById('btnAgregarUsuario');
+  if (btnAgregarUsuario) {
+    btnAgregarUsuario.onclick = () => {
+      if (usuarioAdminData.rol === 'super_admin') {
+        abrirModalAgregarUsuario();
+      } else {
+        mostrarToast('No tienes permisos para agregar usuarios');
+      }
+    };
+  }
+
+  // Cargar usuarios y auditoría
+  cargarUsuariosAdmin();
+  cargarAuditoriaAdmin();
+
+  // Filtros de auditoría
+  const filtroAudUsuario = document.getElementById('filtroAudUsuario');
+  const filtroAudFechaInicio = document.getElementById('filtroAudFechaInicio');
+  const filtroAudFechaFin = document.getElementById('filtroAudFechaFin');
+  const filtroAudAccion = document.getElementById('filtroAudAccion');
+  const btnLimpiarFiltrosAud = document.getElementById('btnLimpiarFiltrosAud');
+
+  if (filtroAudUsuario) {
+    filtroAudUsuario.addEventListener('input', filtrarAuditoria);
+  }
+  if (filtroAudFechaInicio) {
+    filtroAudFechaInicio.addEventListener('change', filtrarAuditoria);
+  }
+  if (filtroAudFechaFin) {
+    filtroAudFechaFin.addEventListener('change', filtrarAuditoria);
+  }
+  if (filtroAudAccion) {
+    filtroAudAccion.addEventListener('change', filtrarAuditoria);
+  }
+  if (btnLimpiarFiltrosAud) {
+    btnLimpiarFiltrosAud.onclick = limpiarFiltrosAuditoria;
+  }
+}
+
+// ==========================================================
+// GESTIÓN DE USUARIOS ADMINISTRATIVOS
+// ==========================================================
+
+async function cargarUsuariosAdmin() {
+  try {
+    usuariosAdminData = await obtenerUsuariosAdmin();
+    renderizarTablaUsuarios();
+  } catch (error) {
+    console.error('Error al cargar usuarios:', error);
+    mostrarToast('Error al cargar usuarios');
+  }
+}
+
+function renderizarTablaUsuarios() {
+  const tbody = document.getElementById('tablaUsuariosAdmin');
+  if (!tbody) return;
+
+  if (usuariosAdminData.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="sin-datos">No hay usuarios registrados</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = usuariosAdminData.map(usuario => {
+    const rol = ROLES_DEFINIDOS[usuario.rol];
+    const ultimoAcceso = usuario.ultimoAcceso
+      ? new Date(usuario.ultimoAcceso.toDate()).toLocaleDateString('es-PE')
+      : 'Nunca';
+
+    return `
+      <tr>
+        <td class="usuario-email">${usuario.email}</td>
+        <td>${usuario.nombre}</td>
+        <td>
+          <span class="usuario-rol ${usuario.rol.replace(/_/g, '-')}">${rol.nombre}</span>
+        </td>
+        <td>
+          <span class="usuario-estado estado-${usuario.estado}">
+            ${usuario.estado.charAt(0).toUpperCase() + usuario.estado.slice(1)}
+          </span>
+        </td>
+        <td class="usuario-acceso">${ultimoAcceso}</td>
+        <td>
+          <div class="acciones-usuario">
+            <button class="btn-editar-usuario" onclick="editarUsuarioAdmin('${usuario.id}')">Editar</button>
+            <button class="btn-eliminar-usuario" onclick="eliminarUsuarioAdmin('${usuario.id}')">Eliminar</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function abrirModalAgregarUsuario() {
+  // Placeholder - se implementará con modal real
+  mostrarToast('Funcionalidad de agregar usuario en desarrollo');
+  console.log('Abrir modal de agregar usuario');
+}
+
+async function editarUsuarioAdmin(usuarioId) {
+  // Placeholder
+  mostrarToast('Funcionalidad de editar usuario en desarrollo');
+  console.log('Editar usuario:', usuarioId);
+}
+
+async function eliminarUsuarioAdmin(usuarioId) {
+  // Placeholder
+  mostrarToast('Funcionalidad de eliminar usuario en desarrollo');
+  console.log('Eliminar usuario:', usuarioId);
+}
+
+// ==========================================================
+// GESTIÓN DE AUDITORÍA
+// ==========================================================
+
+async function cargarAuditoriaAdmin() {
+  try {
+    const auditRef = collection(db, 'auditoria');
+    const q = query(auditRef, orderBy('timestamp', 'desc'));
+    const snapshot = await getDocs(q);
+
+    auditData = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    auditFiltrada = [...auditData];
+    renderizarTablaAuditoria();
+  } catch (error) {
+    console.error('Error al cargar auditoría:', error);
+    mostrarToast('Error al cargar auditoría');
+  }
+}
+
+function renderizarTablaAuditoria() {
+  const tbody = document.getElementById('tablaAuditoriaAdmin');
+  if (!tbody) return;
+
+  if (auditFiltrada.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="sin-datos">No hay registros</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = auditFiltrada.map(registro => {
+    const fecha = new Date(registro.timestamp.toDate()).toLocaleString('es-PE');
+    const tipoAccion = getClaseAccion(registro.accion);
+
+    return `
+      <tr>
+        <td class="aud-fecha">${fecha}</td>
+        <td class="aud-usuario">${registro.usuario}</td>
+        <td>
+          <span class="aud-accion ${tipoAccion}">
+            ${registro.accion.replace(/_/g, ' ')}
+          </span>
+        </td>
+        <td class="aud-recurso">${registro.recurso || '-'}</td>
+        <td class="aud-detalles">${registro.detalles || registro.tipo || '-'}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function getClaseAccion(accion) {
+  if (accion.includes('CREAR')) return 'accion-crear';
+  if (accion.includes('MODIFICAR')) return 'accion-modificar';
+  if (accion.includes('ELIMINAR')) return 'accion-eliminar';
+  if (accion.includes('DENEGADO')) return 'accion-acceso-denegado';
+  return 'accion-modificar';
+}
+
+function filtrarAuditoria() {
+  const usuario = document.getElementById('filtroAudUsuario')?.value || '';
+  const fechaInicio = document.getElementById('filtroAudFechaInicio')?.value;
+  const fechaFin = document.getElementById('filtroAudFechaFin')?.value;
+  const accion = document.getElementById('filtroAudAccion')?.value || '';
+
+  auditFiltrada = auditData.filter(registro => {
+    // Filtrar por usuario
+    if (usuario && !registro.usuario.toLowerCase().includes(usuario.toLowerCase())) {
+      return false;
+    }
+
+    // Filtrar por fecha
+    if (fechaInicio || fechaFin) {
+      const fechaReg = new Date(registro.timestamp.toDate());
+      if (fechaInicio) {
+        const inicio = new Date(fechaInicio);
+        inicio.setHours(0, 0, 0, 0);
+        if (fechaReg < inicio) return false;
+      }
+      if (fechaFin) {
+        const fin = new Date(fechaFin);
+        fin.setHours(23, 59, 59, 999);
+        if (fechaReg > fin) return false;
+      }
+    }
+
+    // Filtrar por acción
+    if (accion && !registro.accion.includes(accion)) {
+      return false;
+    }
+
+    return true;
+  });
+
+  renderizarTablaAuditoria();
+}
+
+function limpiarFiltrosAuditoria() {
+  document.getElementById('filtroAudUsuario').value = '';
+  document.getElementById('filtroAudFechaInicio').value = '';
+  document.getElementById('filtroAudFechaFin').value = '';
+  document.getElementById('filtroAudAccion').value = '';
+
+  auditFiltrada = [...auditData];
+  renderizarTablaAuditoria();
+  mostrarToast('Filtros limpios');
+}
+
+// ==========================================================
 // EXPORTAR FUNCIONES GLOBALES
 // ==========================================================
 
 window.verDetalle = verDetalle;
 window.abrirModalEtiquetas = abrirModalEtiquetas;
 window.toggleAgotado = toggleAgotado;
+window.editarUsuarioAdmin = editarUsuarioAdmin;
+window.eliminarUsuarioAdmin = eliminarUsuarioAdmin;
