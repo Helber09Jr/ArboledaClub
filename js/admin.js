@@ -861,6 +861,13 @@ function cerrarModalReservaManual() {
 }
 
 async function guardarReservaManual() {
+  // VALIDACIÓN DE PERMISO - CREAR RESERVAS
+  if (!verificarPermiso(usuarioAdminData, 'reservas.crear')) {
+    await registrarAccesoDenegado(usuarioActual.email, 'crear_reserva_manual', 'reserva:nueva');
+    mostrarToast('No tienes permiso para crear reservas');
+    return;
+  }
+
   const instalacion = document.getElementById('manualInstalacion').value;
   const fecha = document.getElementById('manualFecha').value;
   const horario = document.getElementById('manualHorario').value.trim();
@@ -869,17 +876,17 @@ async function guardarReservaManual() {
   const personas = document.getElementById('manualPersonas').value;
   const estado = document.getElementById('manualEstado').value;
   const observaciones = document.getElementById('manualObservaciones').value.trim();
-  
+
   if (!instalacion || !fecha || !nombre || !telefono || !personas) {
     mostrarToast('Completa todos los campos obligatorios');
     return;
   }
-  
+
   let tipoInstalacion = 'parrillas';
   if (instalacion.startsWith('tenis')) tipoInstalacion = 'tenis';
   else if (instalacion.startsWith('fronton')) tipoInstalacion = 'fronton';
   else if (instalacion === 'mesa-restaurante') tipoInstalacion = 'mesas';
-  
+
   const reserva = {
     instalacion: tipoInstalacion,
     subInstalacion: instalacion,
@@ -897,18 +904,36 @@ async function guardarReservaManual() {
     fechaCreacion: serverTimestamp(),
     creadoPor: auth.currentUser?.email || 'admin'
   };
-  
+
   try {
     const btnGuardar = document.querySelector('.boton-guardar-manual');
     btnGuardar.disabled = true;
     btnGuardar.textContent = 'Guardando...';
-    
+
     const reservasCollection = collection(db, 'reservas');
     const docRef = await addDoc(reservasCollection, reserva);
-    
+
+    // Registrar en auditoría
+    await registrarAccionExitosa(
+      usuarioActual.email,
+      'crear',
+      'reserva',
+      docRef.id,
+      {
+        antes: {},
+        despues: {
+          instalacion: tipoInstalacion,
+          subInstalacion: instalacion,
+          socio: nombre,
+          personas: personas,
+          estado: estado
+        }
+      }
+    );
+
     cerrarModalReservaManual();
-    mostrarToast(`Reserva manual guardada - ID: ${docRef.id.substring(0, 8)}`);
-    
+    mostrarToast(`✅ Reserva manual guardada - ID: ${docRef.id.substring(0, 8)}`);
+
     btnGuardar.disabled = false;
     btnGuardar.innerHTML = `
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -918,11 +943,11 @@ async function guardarReservaManual() {
       </svg>
       Guardar Reserva
     `;
-    
+
   } catch (error) {
     console.error('Error al guardar reserva manual:', error);
     mostrarToast('Error al guardar la reserva');
-    
+
     const btnGuardar = document.querySelector('.boton-guardar-manual');
     btnGuardar.disabled = false;
   }
