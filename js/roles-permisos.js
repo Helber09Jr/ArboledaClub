@@ -120,6 +120,37 @@ export const ROLES_DEFINIDOS = {
       // Carta - solo lectura
       'carta.leer'
     ]
+  },
+
+  gerente: {
+    id: 'gerente',
+    nombre: 'Administrador',
+    descripcion: 'Gestiona reservas y menú (acceso completo a operaciones)',
+    color: '#6C63FF',
+    esRolBase: true,
+    permisos: [
+      // Reservas - acceso completo
+      'reservas.crear',
+      'reservas.leer',
+      'reservas.modificar',
+      'reservas.eliminar',
+      'reservas.cambiar_estado',
+      'reservas.enviar_notificaciones',
+      'reservas.exportar',
+
+      // Carta - acceso completo
+      'carta.crear',
+      'carta.leer',
+      'carta.modificar',
+      'carta.eliminar',
+      'carta.gestionar_etiquetas',
+      'carta.ver_estadisticas',
+      'carta.exportar',
+
+      // Reportes
+      'reportes.ver_todos',
+      'reportes.exportar'
+    ]
   }
 };
 
