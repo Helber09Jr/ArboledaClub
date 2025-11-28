@@ -92,6 +92,14 @@ async function verificarAutenticacion() {
 
           // Recargar datos del usuario después de crearlo
           usuarioAdminData = await obtenerUsuarioAdminPorUid(usuario.uid);
+
+          // Verificar que se cargó correctamente
+          if (!usuarioAdminData) {
+            console.error('Error: No se pudo cargar el usuario creado');
+            cerrarSesion();
+            mostrarToast('Error al configurar la cuenta. Por favor intenta nuevamente');
+            return;
+          }
         } else {
           // Otros admins existen pero este usuario no es admin
           console.error('Usuario no autorizado como admin');
@@ -177,7 +185,7 @@ async function crearPrimerAdmin(usuario) {
       fechaCreacion: serverTimestamp(),
       ultimoAcceso: serverTimestamp(),
       historialAcceso: [{
-        fecha: serverTimestamp(),
+        fecha: Timestamp.now(),
         tipo: 'LOGIN_BOOTSTRAP'
       }],
       esBootstrap: true
