@@ -80,11 +80,25 @@ async function verificarAutenticacion() {
       usuarioAdminData = await obtenerUsuarioAdminPorUid(usuario.uid);
 
       if (!usuarioAdminData) {
-        // Usuario no tiene rol asignado
-        console.error('Usuario sin rol asignado');
-        cerrarSesion();
-        mostrarToast('No tienes permisos de acceso');
-        return;
+        // Usuario no tiene rol asignado - Implementar mecanismo bootstrap
+        console.log('Usuario sin rol asignado. Verificando si es el primer admin...');
+
+        const adminsExisten = await verificarSiExistenAdmins();
+
+        if (!adminsExisten) {
+          // No hay admins en la base de datos - Crear este usuario como super_admin
+          console.log('No hay admins. Auto-creando usuario como super_admin...');
+          await crearPrimerAdmin(usuario);
+
+          // Recargar datos del usuario después de crearlo
+          usuarioAdminData = await obtenerUsuarioAdminPorUid(usuario.uid);
+        } else {
+          // Otros admins existen pero este usuario no es admin
+          console.error('Usuario no autorizado como admin');
+          cerrarSesion();
+          mostrarToast('Tu cuenta no tiene permisos de administrador');
+          return;
+        }
       }
 
       // Obtener permisos del usuario
@@ -117,6 +131,80 @@ function mostrarLogin() {
 function mostrarPanel() {
   document.getElementById('pantallaLogin').classList.add('oculto');
   document.getElementById('panelPrincipal').classList.remove('oculto');
+}
+
+// ==========================================================
+// MECANISMO BOOTSTRAP - PRIMER ADMIN
+// ==========================================================
+
+/**
+ * Verifica si existen usuarios admin en la base de datos
+ * @returns {boolean} true si hay al menos un admin, false si no hay ninguno
+ */
+async function verificarSiExistenAdmins() {
+  try {
+    const admins = await obtenerUsuariosAdmin();
+    return admins && admins.length > 0;
+  } catch (error) {
+    console.error('Error al verificar admins:', error);
+    return true; // Si hay error, asumir que existen admins por seguridad
+  }
+}
+
+/**
+ * Crea el primer usuario admin como super_admin
+ * Este mecanismo permite que el primer usuario que se autentique
+ * pueda acceder al sistema sin necesidad de crear usuarios manualmente
+ * @param {Object} usuario - Objeto de usuario de Firebase Auth
+ */
+async function crearPrimerAdmin(usuario) {
+  try {
+    console.log('Iniciando creación del primer admin para UID:', usuario.uid);
+
+    const usuariosRef = collection(db, 'usuarios_admin');
+    const docRef = doc(usuariosRef, usuario.uid);
+
+    // Extraer nombre del email o usar email completo
+    const nombre = usuario.displayName || usuario.email.split('@')[0];
+
+    const datosAdmin = {
+      uid: usuario.uid,
+      email: usuario.email,
+      nombre: nombre,
+      rol: 'super_admin',
+      estado: 'activo',
+      permisos_custom: {},
+      fechaCreacion: serverTimestamp(),
+      ultimoAcceso: serverTimestamp(),
+      historialAcceso: [{
+        fecha: serverTimestamp(),
+        tipo: 'LOGIN_BOOTSTRAP'
+      }],
+      esBootstrap: true
+    };
+
+    await setDoc(docRef, datosAdmin);
+
+    console.log('✅ Primer admin creado exitosamente');
+
+    // Registrar en auditoría
+    await registrarAuditoria({
+      usuario: usuario.email,
+      accion: 'SISTEMA_BOOTSTRAP',
+      recurso: `usuario:${usuario.uid}`,
+      detalles: 'Primer usuario admin creado automáticamente (bootstrap)',
+      tipo: 'SISTEMA',
+      timestamp: Timestamp.now()
+    });
+
+    mostrarToast('✅ Bienvenido! Tu cuenta ha sido configurada como Super Administrador');
+
+    return true;
+  } catch (error) {
+    console.error('Error al crear primer admin:', error);
+    mostrarToast('Error al configurar tu cuenta de administrador');
+    return false;
+  }
 }
 
 // ==========================================================
